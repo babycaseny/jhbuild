@@ -95,7 +95,7 @@
         system, <command>git</command>. This can be achieved with the following
         command. It is recommended to run the command from a new directory where
         all source code will be installed, for example,
-        <filename>~/checkout/gnome</filename>.</para>
+        <filename>~/jhbuild/checkout</filename>.</para>
 
 <screen><prompt>$</prompt> <userinput>git clone git://git.gnome.org/jhbuild</userinput>
 <computeroutput>...</computeroutput>
@@ -138,7 +138,7 @@
         <envar>PATH</envar> variable, run the following command:</para>
 
 <screen>
-<prompt>$</prompt> <userinput>echo PATH=$PATH:~/.local/bin >> ~/.bashrc</userinput>
+<prompt>$</prompt> <userinput>echo 'PATH=$PATH:~/.local/bin' >> ~/.bashrc</userinput>
 <prompt>$</prompt></screen>
     </section>
 
@@ -159,8 +159,8 @@
         <application>meta-gnome-apps-tested</application> modules and
         dependencies from the <systemitem>gnome-apps</systemitem> module set.
         JHBuild will unpack source trees to
-        <filename>~/checkout/gnome</filename> and install all files to
-        subdirectories of <filename>/opt/gnome</filename>. The two directories
+        <filename>~/jhbuild/checkout/</filename> and install all files to
+        subdirectories of <filename>~/jhbuild/install/</filename>. The two directories
         must be writable.</para>
 
       <para>Configuration variables are documented in
@@ -222,7 +222,7 @@
               to. Unless <link linkend="cfg-buildroot">
               <varname>buildroot</varname></link> is set, builds will occur in
               this directory too. Defaults to
-              <filename>~/checkout/gnome</filename>.</simpara>
+              <filename>~/jhbuild/checkout</filename>.</simpara>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -232,7 +232,7 @@
           <listitem>
             <simpara>A string specifying the prefix to install modules to.
               <varname>prefix</varname> must be an absolute path. This directory
-              must be writable. Defaults to <literal>'/opt/gnome'</literal>.
+              must be writable. Defaults to <literal>'~/jhbuild/install/'</literal>.
             </simpara>
           </listitem>
         </varlistentry>
@@ -446,7 +446,7 @@
       <para>Verify the correct application will be run. For example:</para>
 
 <screen><prompt>$ </prompt><userinput>which gedit</userinput>
-/opt/gnome/bin/gedit</screen>
+/home/wanda/jhbuild/install/bin/gedit</screen>
 
       <para>Run the application:</para>
 
@@ -479,7 +479,7 @@
         <filename>~/.local/bin</filename> to the <envar>PATH</envar> variable,
         run the following command:</para>
 
-<screen><prompt>$</prompt> <userinput>echo PATH=$PATH:~/.local/bin &gt;&gt; ~/.bashrc</userinput></screen>
+<screen><prompt>$</prompt> <userinput>echo 'PATH=$PATH:~/.local/bin' &gt;&gt; ~/.bashrc</userinput></screen>
 
       <para>Test JHBuild works:</para>
 
@@ -497,23 +497,23 @@
           <filename>/usr/share/dbus-1/system-services/</filename>. JHBuild GNOME
           will use the JHBuild session <application>D-Bus</application> daemon
           and the services within
-          <filename><replaceable>/opt/gnome</replaceable>/share/dbus-1/services/</filename>.
-          Replace <filename>/opt/gnome</filename> with GNOME install
+          <filename><replaceable>~/jhbuild/install/</replaceable>/share/dbus-1/services/</filename>.
+          Replace <filename>~/jhbuild/install</filename> with GNOME install
           <varname>prefix</varname> in the command below:</para>
 
-<screen><prompt>$ </prompt><userinput>rm -rf <replaceable>/opt/gnome</replaceable>/var/run/dbus</userinput>
-<prompt>$ </prompt><userinput>ln -s /var/run/dbus <replaceable>/opt/gnome</replaceable>/var/run/dbus</userinput>
-<prompt>$ </prompt><userinput>rm -rf <replaceable>/opt/gnome</replaceable>/var/lib/dbus/machine-id</userinput>
-<prompt>$ </prompt><userinput>ln -s /var/lib/dbus/machine-id <replaceable>/opt/gnome</replaceable>/var/lib/dbus/machine-id</userinput></screen>
+<screen><prompt>$ </prompt><userinput>rm -rf <replaceable>~/jhbuild/install</replaceable>/var/run/dbus</userinput>
+<prompt>$ </prompt><userinput>ln -s /var/run/dbus <replaceable>~/jhbuild/install</replaceable>/var/run/dbus</userinput>
+<prompt>$ </prompt><userinput>rm -rf <replaceable>~/jhbuild/install</replaceable>/var/lib/dbus/machine-id</userinput>
+<prompt>$ </prompt><userinput>ln -s /var/lib/dbus/machine-id <replaceable>~/jhbuild/install</replaceable>/var/lib/dbus/machine-id</userinput></screen>
 
         <para>Create a GNOME startup script at
           <filename>/usr/bin/gnome-jhbuild-session</filename> with the
-          following, replacing <filename>/opt/gnome</filename> with GNOME
+          following, replacing <filename>~/jhbuild/install</filename> with GNOME
           install <varname>prefix</varname>:</para>
 
 <programlisting>#!/bin/sh
 
-GNOME=<replaceable>/opt/gnome</replaceable>
+GNOME=<replaceable>~/jhbuild/install</replaceable>
  
 GDK_USE_XFT=1
 XDG_DATA_DIRS=$XDG_DATA_DIRS:$GNOME/share
@@ -663,6 +663,18 @@ jhbuildbot_password = 'password'
           <simpara>Do not prompt the user for any input. This option is useful
             if leaving a build unattended, in order to ensure the build is not
             interrupted.</simpara>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          <option>--conditions</option>
+        </term>
+        <listitem>
+          <simpara>Modify the condition flags to be different than those determined on the basis of the OS and
+            those specified in jhbuildrc.  Modifications are specified like <literal>-wayland</literal> or
+            <literal>+docs</literal> in order to remove or add conditions.  Multiple modifications can be
+            separated by a comma like <command>--conditions=+docs,-wayland</command> or you can split them
+            across multiple <command>--conditions</command> arguments.</simpara>
         </listitem>
       </varlistentry>
     </variablelist>
@@ -1706,6 +1718,22 @@ Optional packages: (JHBuild will build the missing packages)
             </simpara>
           </listitem>
         </varlistentry>
+        <varlistentry id="cfg-disable-Werror">
+          <term>
+            <varname>disable_Werror</varname>
+          </term>
+          <listitem>
+            <simpara>
+              A boolean value (default <literal>True</literal>) which controls if
+              <literal>--disable-Werror</literal> will be passed to automake builds.  Many packages use this
+              flag as a way to disable fatal compiler warnings.  The value of <literal>True</literal> is
+              selected as a resonable default for those using jhbuild as a means to get an up-to-date version of
+              software packages without being side-tracked by build failures in other people's modules.
+              Settings this value to <literal>False</literal> may make sense for those using jhbuild as part of
+              a continuous integration or testing system.
+            </simpara>
+          </listitem>
+        </varlistentry>
         <varlistentry id="cfg-dvcs-mirror-dir">
           <term>
             <varname>dvcs_mirror_dir</varname>
@@ -1719,6 +1747,25 @@ Optional packages: (JHBuild will build the missing packages)
               <command>updateone</command> will create the mirrors and fetch new
               commits from the online repositories. This option is only
               supported by Git and Bazaar repositories.</simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry id="cfg-extra-prefixes">
+          <term>
+            <varname>extra_prefixes</varname>
+          </term>
+          <listitem>
+            <simpara>A list of strings specifying, in precedence order, the list
+              of extra prefixes.  JHBuild sets many environment variables (such
+              as <envar>LD_LIBRARY_PATH</envar>, <envar>PKG_CONFIG_PATH</envar>
+              and <envar>XDG_DATA_DIRS</envar>) based on the
+              <varname>prefix</varname> variable.  Adding directories to
+              <varname>extra_prefixes</varname> will cause these prefixes to be
+              included as well, at a lower precedence than the JHBuild
+              <varname>prefix</varname>, but at a higher precendence than system
+              directories.  This variable is empty by default except on systems
+              that install software in <filename>/usr/local</filename>, in which
+              case it contains this directory.
+            </simpara>
           </listitem>
         </varlistentry>
         <varlistentry id="cfg-help-website">
@@ -2044,7 +2091,7 @@ Optional packages: (JHBuild will build the missing packages)
           <listitem>
             <simpara>A string specifying the prefix to install modules to.
               <varname>prefix</varname> must be an absolute path. This directory
-              must be writable. Defaults to <literal>'/opt/gnome'</literal>.
+              must be writable. Defaults to <literal>'~/jhbuild/install/'</literal>.
             </simpara>
           </listitem>
         </varlistentry>
@@ -2145,6 +2192,16 @@ Optional packages: (JHBuild will build the missing packages)
               <literal>svn</literal>.</simpara>
           </listitem>
         </varlistentry>
+        <varlistentry id="cfg-system-libdirs">
+          <term>
+            <varname>system_libdirs</varname>
+          </term>
+          <listitem>
+            <simpara>A list of strings specifying the system library paths.
+              This is used when setting the default values of some environment
+              variables, such as <envar>PKG_CONFIG_PATH</envar>.</simpara>
+          </listitem>
+        </varlistentry>
         <varlistentry id="cfg-tarballdir">
           <term>
             <varname>tarballdir</varname>
@@ -2154,7 +2211,8 @@ Optional packages: (JHBuild will build the missing packages)
               specified directory instead of <varname>checkoutroot</varname>.
               This is useful if you have multiple JHBuild environments or
               regularly clear out <varname>checkoutroot</varname> and want to
-              reduce bandwidth usage.</simpara>
+              reduce bandwidth usage.  Defaults to
+              <literal>'~/jhbuild/downloads'</literal>.</simpara>
           </listitem>
         </varlistentry>
         <varlistentry id="cfg-tinderbox-outputdir">
@@ -2183,20 +2241,6 @@ Optional packages: (JHBuild will build the missing packages)
             </simpara>
           </listitem>
         </varlistentry>
-        <varlistentry id="cfg-use-lib64">
-          <term>
-            <varname>use_lib64</varname>
-          </term>
-          <listitem>
-            <simpara>A boolean value that specifies whether to install
-              libraries to <filename>lib64</filename> directories. If set,
-              <literal>--libdir=\${exec_prefix}/lib64</literal> will be passed
-              to configure. Defaults to <constant>True</constant> if running on
-              <literal>x86_64</literal>, <literal>ppc64</literal> or
-              <literal>s390x</literal> Linux, and <constant>False</constant> on
-              other systems.</simpara>
-          </listitem>
-        </varlistentry>
         <varlistentry id="cfg-use-local-modulesets">
           <term>
             <varname>use_local_modulesets</varname>
@@ -2215,6 +2259,20 @@ Optional packages: (JHBuild will build the missing packages)
           <listitem>
             <simpara>A string listing arguments to pass to
               <command>Xvfb</command> if running graphical tests.</simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry id="cfg-conditions">
+          <term>
+            <varname>conditions</varname>
+          </term>
+          <listitem>
+            <simpara>A set of condition (strings) that can influence the modules that are built and the options
+              that are used for building them.  You should use <literal>conditions.add()</literal> and
+              <literal>conditions.discard()</literal> to modify the list if you want to make changes.</simpara>
+            <simpara>The original set of conditions is determined on a per-OS basis and can be modified using
+              the --conditions= commandline argument.  The changes made by --conditions are visible at the time
+              that jhbuildrc is sourced, so you can set other variables based on the current value of the set,
+              but --conditions will be applied again after any changes made by jhbuildrc.</simpara>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -2254,11 +2312,6 @@ Optional packages: (JHBuild will build the missing packages)
               handle the case when the environment variable is initially empty
               (having a stray colon at the beginning or end of an environment
               variable can have unexpected consequences).</para>
-
-            <para><function>addpath</function> has special handling for the
-              <envar>ACLOCAL_FLAGS</envar> environment variable, which expects
-              paths to be listed in the form <literal>-I
-              <replaceable>pathname</replaceable></literal>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -2295,6 +2348,13 @@ Optional packages: (JHBuild will build the missing packages)
       <sgmltag class="element">moduleset</sgmltag> element. No XML namespace is
       used. The elements below the top-level come in three types: module
       sources, include statements and module definitions.</para>
+
+    <para>Content in the moduleset file can be conditionally included by use of the &lt;if> tag to surround the
+      conditional content.  It is currently only possible to predicate the inclusion on whether a particular
+      condition flag is set or not, using &lt;if condition-set='cond'> or &lt;if condition-unset='cond'>.
+      Conditions are set by default on a per-OS basis but can be influenced by way of the
+      <varname>conditions</varname> variable in jhbuildrc or the <command>--conditions=</command> commandline
+      argument.</para>
 
     <section id="moduleset-syntax-sources">
       <title>Module Sources</title>
@@ -2729,9 +2789,11 @@ Optional packages: (JHBuild will build the missing packages)
 	      [ makefile="<replaceable>makefile</replaceable>" ]
 	      [ skip-autogen="<replaceable>skip-autogen</replaceable>" ]
 	      [ skip-install="<replaceable>skip-install</replaceable>" ]
+	      [ uninstall-before-install="<replaceable>uninstall-before-install</replaceable>" ]
 	      [ autogen-template="<replaceable>autogen-template</replaceable>" ]
 	      [ check-target="<replaceable>check-target</replaceable>" ]
-	      [ supports-non-srcdir-builds="<replaceable>supports-non-srcdir-builds</replaceable>" ]&gt;
+	      [ supports-non-srcdir-builds="<replaceable>supports-non-srcdir-builds</replaceable>" ]
+	      [ force-non-srcdir-builds="<replaceable>force-non-srcdir-builds</replaceable>" ]&gt;
 
   &lt;branch [ ... ] &gt;
     [...]
@@ -2771,10 +2833,24 @@ Optional packages: (JHBuild will build the missing packages)
           command on the module. <sgmltag class="attribute">makefile</sgmltag>
           specifies the filename of the makefile to use.</para>
 
+	<para>The <sgmltag class="attribute">uninstall-before-install</sgmltag>
+	  specifies any old installed files from the module should before removed
+	  before running the install step. This can be used to work around a
+	  problem where libtool tries to link one library it is installing
+	  against another library it is installing, but because of jhbuild's
+	  use of DESTDIR, finds the old installed library instead. The downside
+          of specifying this is that it could cause problems if the user is
+	  currently running code that relies on installed files from the
+	  module.</para>
+
         <para>The
           <sgmltag class="attribute">supports-non-srcdir-builds</sgmltag>
           attribute is used to mark modules that can't be cleanly built using a
           separate source directory.</para>
+
+        <para>The <sgmltag class="attribute">force-non-srcdir-builds</sgmltag>
+          attribute is used to mark modules that can't be cleanly built from
+          the source directory, but can be built from outside it.</para>
 
         <para>The <sgmltag class="attribute">autogen-template</sgmltag>
           attribute can be used if you need finer control over the autogen

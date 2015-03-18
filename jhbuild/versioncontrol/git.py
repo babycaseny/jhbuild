@@ -128,6 +128,9 @@ class GitRepository(Repository):
     def to_sxml(self):
         return [sxml.repository(type='git', name=self.name, href=self.href)]
 
+    def get_sysdeps(self):
+        return ['git']
+
 
 class GitBranch(Branch):
     """A class representing a GIT branch."""
@@ -143,7 +146,9 @@ class GitBranch(Branch):
         self.unmirrored_module = unmirrored_module
 
     def get_module_basename(self):
-        name = os.path.basename(self.module)
+        # prevent basename() from returning empty strings on trailing '/'
+        name = self.module.rstrip(os.sep)
+        name = os.path.basename(name)
         if name.endswith('.git'):
             name = name[:-4]
         return name

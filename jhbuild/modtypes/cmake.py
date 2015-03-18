@@ -44,26 +44,26 @@ class CMakeModule(MakeModule, DownloadableModule):
         MakeModule.__init__(self, name, branch=branch, makeargs=makeargs)
         self.cmakeargs = cmakeargs
         self.supports_non_srcdir_builds = True
+        self.force_non_srcdir_builds = False
         self.supports_install_destdir = True
 
     def eval_args(self, args):
         args = Package.eval_args(self, args)
-        libsuffix = ''
-        if self.config.use_lib64:
-            libsuffix = '64'
-        args = args.replace('${libsuffix}', libsuffix)
+        args = args.replace('${libsuffix}', '')
         return args
 
     def get_srcdir(self, buildscript):
         return self.branch.srcdir
 
     def get_builddir(self, buildscript):
+        builddir = self.get_srcdir(buildscript)
         if buildscript.config.buildroot and self.supports_non_srcdir_builds:
             d = buildscript.config.builddir_pattern % (
                 self.branch.checkoutdir or self.branch.get_module_basename())
-            return os.path.join(buildscript.config.buildroot, d)
-        else:
-            return self.get_srcdir(buildscript)
+            builddir = os.path.join(buildscript.config.buildroot, d)
+        if self.force_non_srcdir_builds and builddir == self.get_srcdir(buildscript):
+            builddir = os.path.join(builddir, 'build')
+        return builddir
 
     def get_cmakeargs(self):
         args = '%s %s' % (self.cmakeargs,
@@ -75,13 +75,12 @@ class CMakeModule(MakeModule, DownloadableModule):
         buildscript.set_action(_('Configuring'), self)
         srcdir = self.get_srcdir(buildscript)
         builddir = self.get_builddir(buildscript)
-        if buildscript.config.buildroot and not os.path.exists(builddir):
+        if not os.path.exists(builddir):
             os.makedirs(builddir)
         prefix = os.path.expanduser(buildscript.config.prefix)
         if not inpath('cmake', os.environ['PATH'].split(os.pathsep)):
             raise CommandError(_('%s not found') % 'cmake')
-        baseargs = '-DCMAKE_INSTALL_PREFIX=%s -DLIB_INSTALL_DIR=%s -Dlibdir=%s' % (
-                        prefix, buildscript.config.libdir, buildscript.config.libdir)
+        baseargs = '-DCMAKE_INSTALL_PREFIX=%s -DCMAKE_INSTALL_LIBDIR=lib' % prefix
         cmakeargs = self.get_cmakeargs()
         # CMake on Windows generates VS projects or NMake makefiles by default.
         # When using MSYS "MSYS Makefiles" is the best guess. "Unix Makefiles"
@@ -101,27 +100,20 @@ class CMakeModule(MakeModule, DownloadableModule):
     def do_clean(self, buildscript):
         buildscript.set_action(_('Cleaning'), self)
         builddir = self.get_builddir(buildscript)
-        cmd = '%s %s clean' % (os.environ.get('MAKE', 'make'), self.get_makeargs(buildscript))
-        buildscript.execute(cmd, cwd = builddir,
-                extra_env = self.extra_env)
+        self.make(buildscript, 'clean')
     do_clean.depends = [PHASE_CONFIGURE]
     do_clean.error_phases = [PHASE_FORCE_CHECKOUT, PHASE_CONFIGURE]
 
     def do_build(self, buildscript):
         buildscript.set_action(_('Building'), self)
         builddir = self.get_builddir(buildscript)
-        cmd = '%s %s' % (os.environ.get('MAKE', 'make'), self.get_makeargs(buildscript))
-        buildscript.execute(cmd, cwd = builddir,
-                extra_env = self.extra_env)
+        self.make(buildscript)
     do_build.depends = [PHASE_CONFIGURE]
     do_build.error_phases = [PHASE_FORCE_CHECKOUT]
 
     def do_dist(self, buildscript):
         buildscript.set_action(_('Creating tarball for'), self)
-        cmd = '%s %s package_source' % (os.environ.get('MAKE', 'make'),
-                self.get_makeargs(buildscript))
-        buildscript.execute(cmd, cwd = self.get_builddir(buildscript),
-                extra_env = self.extra_env)
+        self.make(buildscript, 'package_source')
     do_dist.depends = [PHASE_CONFIGURE]
     do_dist.error_phases = [PHASE_FORCE_CHECKOUT, PHASE_CONFIGURE]
 
@@ -129,11 +121,7 @@ class CMakeModule(MakeModule, DownloadableModule):
         buildscript.set_action(_('Installing'), self)
         builddir = self.get_builddir(buildscript)
         destdir = self.prepare_installroot(buildscript)
-        cmd = '%s %s install DESTDIR=%s' % (os.environ.get('MAKE', 'make'),
-                self.get_makeargs(buildscript), destdir)
-        buildscript.execute(cmd,
-                cwd = builddir,
-                extra_env = self.extra_env)
+        self.make(buildscript, 'install DESTDIR={}'.format(destdir))
         self.process_install(buildscript, self.get_revision())
     do_install.depends = [PHASE_BUILD]
 
@@ -143,9 +131,15 @@ class CMakeModule(MakeModule, DownloadableModule):
 
 def parse_cmake(node, config, uri, repositories, default_repo):
     instance = CMakeModule.parse_from_xml(node, config, uri, repositories, default_repo)
+
+    instance.dependencies += ['cmake', instance.get_makecmd(config)]
+
     if node.hasAttribute('supports-non-srcdir-builds'):
         instance.supports_non_srcdir_builds = \
                 (node.getAttribute('supports-non-srcdir-builds') != 'no')
+    if node.hasAttribute('force-non-srcdir-builds'):
+        instance.force_non_srcdir_builds = \
+                (node.getAttribute('force-non-srcdir-builds') != 'no')
     if node.hasAttribute('cmakeargs'):
         instance.cmakeargs = node.getAttribute('cmakeargs')
     if node.hasAttribute('makeargs'):

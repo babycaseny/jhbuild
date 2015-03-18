@@ -11,8 +11,8 @@
       href="git://anongit.freedesktop.org/"/>
   <repository type="git" name="telepathy.freedesktop.org"
     href="git://anongit.freedesktop.org/telepathy/"/>
-  <repository type="git" name="packagekit.gitorious.org"
-      href="git://gitorious.org/packagekit"/>
+  <repository type="git" name="github.com"
+      href="git://github.com/"/>
 
 <!-- tarball repos -->
   <repository type="tarball" name="avahi.org"
@@ -85,7 +85,7 @@
   </autotools>
 
   <autotools id="gnome-bluetooth">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="gtk+"/>
       <dep package="gtk-doc"/>
@@ -175,7 +175,7 @@
   </autotools>
 
   <autotools id="gnome-icon-theme">
-    <branch/>
+    <branch repo="git.gnome.org" module="adwaita-icon-theme" revision="gnome-3-8"/>
     <dependencies>
       <dep package="hicolor-icon-theme"/>
       <dep package="icon-naming-utils"/>
@@ -202,7 +202,7 @@
   </autotools>
 
   <autotools id="gnome-keyring">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="intltool"/>
       <dep package="dbus"/>
@@ -242,7 +242,7 @@
   </autotools>
 
   <autotools id="gnome-session">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="intltool"/>
       <dep package="gl"/>
@@ -342,9 +342,10 @@
   </autotools>
 
   <autotools id="gsettings-desktop-schemas" autogenargs="--enable-introspection=yes">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="glib"/>
+      <dep package="gnome-common"/>
       <dep package="gobject-introspection"/>
     </dependencies>
   </autotools>
@@ -477,7 +478,7 @@
 <!-- Core Utilities -->
 
   <autotools id="baobab">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="intltool"/>
       <dep package="glib"/>
@@ -529,7 +530,7 @@
   </autotools>
 
   <autotools id="eog">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="intltool"/>
       <dep package="glib"/>
@@ -632,7 +633,7 @@
   </autotools>
 
   <autotools id="gnome-disk-utility">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="glib"/>
       <dep package="gnome-settings-daemon"/>
@@ -646,7 +647,7 @@
   </autotools>
 
   <autotools id="gnome-font-viewer">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="intltool"/>
       <dep package="glib"/>
@@ -656,7 +657,7 @@
   </autotools>
 
   <autotools id="gnome-screenshot">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="intltool"/>
       <dep package="glib"/>
@@ -835,7 +836,7 @@
 <!-- Core OS Services -->
 
   <autotools id="accountsservice" autogenargs="--with-systemdsystemunitdir=no">
-    <branch repo="git.freedesktop.org" module="accountsservice"/>
+    <branch repo="git.freedesktop.org" module="accountsservice" revision="0.6.34"/>
     <dependencies>
       <dep package="dbus-glib"/>
       <dep package="gobject-introspection"/>
@@ -905,7 +906,7 @@
   </autotools>
 
   <autotools id="PackageKit" autogenargs="--disable-tests --disable-qt --disable-browser-plugin" makeargs="CFLAGS=-Wno-error">
-    <branch repo="packagekit.gitorious.org" checkoutdir="PackageKit" module="packagekit.git"/>
+    <branch repo="github.com" module="hughsie/PackageKit.git"/>
     <dependencies>
       <dep package="glib"/>
       <dep package="gtk+"/>
@@ -943,7 +944,7 @@
   </autotools>
 
   <autotools id="upower" autogenargs="--enable-strict=no">
-    <branch repo="git.freedesktop.org" />
+    <branch repo="git.freedesktop.org" revision="0.9"/>
     <dependencies>
       <dep package="polkit"/>
       <dep package="dbus-glib"/>
@@ -955,7 +956,7 @@
   </autotools>
 
   <autotools id="gnome-shell-extensions" autogenargs="--enable-extensions=classic-mode">
-    <branch/>
+    <branch revision="gnome-3-8"/>
     <dependencies>
       <dep package="gnome-shell"/>
     </dependencies>

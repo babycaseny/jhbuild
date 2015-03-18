@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/sh
 #
 # JHBuild configuration script.
 #
@@ -32,6 +32,9 @@
 
 PKG_NAME=jhbuild
 
+FALSE=1
+TRUE=0
+
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 test -z "$MAKE" && MAKE=make
@@ -47,7 +50,7 @@ setup_i18n()
   if [ $msgfmtl_available -eq 0 ]; then
     # -s is for silent
     # -C is for change directory
-    make -s -C $srcdir/po -f Makefile.plain
+    $make_from_environment -s -C $srcdir/po -f Makefile.plain
   fi
 
   # Check gettext.sh is installed to provide i18n for this script
@@ -76,22 +79,18 @@ setup_i18n()
 # on Solaris, BSD and MacOS.
 parse_commandline()
 {
-  enable_autotools=1
+  enable_autotools=$TRUE
 
   while [ -n "$1" ]; do
-    # substring operations available in all sh?
-    if [ ${1:0:2} = "--" ]; then
-      keyvalue=${1:2}
-      key=${keyvalue%%=*}
-      value=${keyvalue##*=}
-      if [ "$key" = "simple-install" ]; then
-        enable_autotools=0
-      fi
-      echo $key | grep -E '^[A-Za-z_][A-Za-z_0-9]*$' > /dev/null 2>&1
-      if [ $? -eq 0 ]; then
-        eval $key=$value
-      fi
-    fi
+    case "$1" in
+      --simple-install)
+        enable_autotools=$FALSE
+        ;;
+
+      --prefix=*)
+        prefix="$(echo "$1" | cut -d= -f2)"
+        ;;
+    esac
     shift
   done
 }
@@ -154,6 +153,8 @@ configure_without_autotools()
 # configure JHBuild to build and install via autotools.
 configure_with_autotools()
 {
+  test -d m4 || mkdir m4
+  test -d build-aux || mkdir build-aux
   export PKG_NAME
   REQUIRED_AUTOCONF_VERSION=2.57 \
   REQUIRED_AUTOMAKE_VERSION=1.8 \
@@ -200,18 +201,36 @@ yelp_tools_available=$?
 
 parse_commandline $*
 
-if [ $gnome_autogen_available -eq 0 -a \
-     $yelp_tools_available -eq 0 -a \
-     $enable_autotools -eq 1 ]; then
-  if test -z "$NOCONFIGURE"; then
-      configure_with_autotools $*
-  fi
+autotools_dependencies_met=$FALSE
+if [ $gnome_autogen_available -eq $TRUE -a \
+     $yelp_tools_available -eq $TRUE ]; then
+    autotools_dependencies_met=$TRUE
+fi
+
+# As a hack, force use of autotools if NOCONFIGURE is specified; this
+# allows the gnome-ostree build system to work which doesn't have
+# yelp, but also can't pass options to autogen.sh
+force_autotools=$FALSE
+if test -n "$NOCONFIGURE"; then
+  force_autotools=$TRUE
+fi
+
+use_autotools=$FALSE
+if [ $enable_autotools -eq $TRUE -a $autotools_dependencies_met -eq $TRUE ]; then
+  use_autotools=$TRUE
+fi
+if [ $force_autotools -eq $TRUE ]; then
+  use_autotools=$TRUE
+fi
+
+if [ $use_autotools -eq $TRUE ]; then
+  configure_with_autotools $*
 else
-  if [ $gnome_autogen_available -ne 0 ]; then
-    gettext "gnome-autogen.sh not available"; echo
+  if [ $gnome_autogen_available -ne $TRUE ]; then
+    gettext "WARNING: gnome-autogen.sh not available (usually part of package 'gnome-common')"; echo
   fi
-  if [ $yelp_tools_available -ne 0 ]; then
-    gettext "yelp-tools not available"; echo
+  if [ $yelp_tools_available -ne $TRUE ]; then
+    gettext "WARNING: yelp-tools not available (usually part of package 'yelp-tools')"; echo
   fi
   configure_without_autotools
 fi

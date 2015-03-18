@@ -46,6 +46,21 @@ from jhbuild.utils import fileutils
 
 __all__ = ['load', 'load_tests', 'get_default_repo']
 
+virtual_sysdeps = [
+    'automake',
+    'bzr',
+    'cmake',
+    'cvs',
+    'git',
+    'gmake',
+    'hg',
+    'libtool',
+    'make',
+    'pkg-config',
+    'svn',
+    'xmlcatalog'
+]
+
 _default_repo = None
 def get_default_repo():
     return _default_repo
@@ -70,6 +85,7 @@ class ModuleSet:
         self.modules[module.name] = module
 
     def get_module(self, module_name, ignore_case = False):
+        module_name = module_name.rstrip(os.sep)
         if self.modules.has_key(module_name) or not ignore_case:
             return self.modules[module_name]
         module_name_lower = module_name.lower()
@@ -92,7 +108,7 @@ class ModuleSet:
 
     def get_full_module_list(self, module_names='all', skip=[],
                                 include_suggests=True, include_afters=False,
-                                warn_about_circular_dependencies=False):
+                                warn_about_circular_dependencies=True):
 
         def dep_resolve(node, resolved, seen, after):
             ''' Recursive depth-first search of the dependency tree. Creates
@@ -354,7 +370,7 @@ def load(config, uri=None):
             elif os.path.isfile(os.path.join(config.modulesets_dir, uri)):
                 uri = os.path.join(config.modulesets_dir, uri)
         elif not urlparse.urlparse(uri)[0]:
-            uri = 'http://git.gnome.org/browse/jhbuild/plain/modulesets' \
+            uri = 'https://git.gnome.org/browse/jhbuild/plain/modulesets' \
                   '/%s.modules' % uri
         ms.modules.update(_parse_module_set(config, uri).modules)
     return ms
@@ -377,6 +393,48 @@ def _child_elements_matching(parent, names):
         if node.nodeType == node.ELEMENT_NODE and node.nodeName in names:
             yield node
 
+def _handle_conditions(config, element):
+    """
+    If we encounter an <if> tag, consult the conditions set in the config
+    in order to decide if we should include its content or not.  If the
+    condition is met, the child elements are added to the parent of the
+    <if/> tag as if the condition tag were not there at all.  If the
+    condition is not met, the entire content is simply dropped.
+
+    We do the processing as a transformation on the DOM as a whole,
+    immediately after parsing the moduleset XML, before doing any additional
+    processing.  This allows <if> to be used for anything and it means we
+    don't need to deal with it separately from each place.
+
+    Although the tool itself will accept <if> anywhere we use the schemas to
+    restrict its use to the purposes of conditionalising dependencies
+    (including suggests) and {autogen,make,makeinstall}args.
+    """
+
+    for condition_tag in _child_elements_matching(element, ['if']):
+        # In all cases, we remove the element from the parent
+        element.childNodes.remove(condition_tag)
+
+        # grab the condition from the attributes
+        c_if = condition_tag.getAttribute('condition-set')
+        c_unless = condition_tag.getAttribute('condition-unset')
+
+        if (not c_if) == (not c_unless):
+            raise FatalError(_("<if> must have exactly one of condition-set='' or condition-unset=''"))
+
+        # check the condition
+        condition_true = ((c_if and c_if in config.conditions) or
+                          (c_unless and c_unless not in config.conditions))
+
+        if condition_true:
+            # add the child elements of <condition> back into the parent
+            for condition_child in _child_elements(condition_tag):
+                element.childNodes.append(condition_child)
+
+    # now, recurse
+    for c in _child_elements(element):
+        _handle_conditions(config, c)
+
 def _parse_module_set(config, uri):
     try:
         filename = httpcache.load(uri, nonetwork=config.nonetwork, age=0)
@@ -391,6 +449,9 @@ def _parse_module_set(config, uri):
         raise FatalError(_('failed to parse %s: %s') % (uri, e))
 
     assert document.documentElement.nodeName == 'moduleset'
+
+    _handle_conditions(config, document.documentElement)
+
     moduleset = ModuleSet(config = config)
     moduleset_name = document.documentElement.getAttribute('name')
     if not moduleset_name:
@@ -476,6 +537,18 @@ def _parse_module_set(config, uri):
                 module.tags.append(moduleset_name)
             module.moduleset_name = moduleset_name
             moduleset.add(module)
+
+    # create virtual sysdeps
+    system_repo_class = get_repo_type('system')
+    virtual_repo = system_repo_class(config, 'virtual-sysdeps')
+    virtual_branch = virtual_repo.branch('virtual-sysdeps') # just reuse this
+    for name in virtual_sysdeps:
+        # don't override it if it's already there
+        if name in moduleset.modules:
+            continue
+
+        virtual = SystemModule.create_virtual(name, virtual_branch, 'path', name)
+        moduleset.add (virtual)
 
     # keep default repository around, used when creating automatic modules
     global _default_repo
