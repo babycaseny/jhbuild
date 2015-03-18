@@ -11,19 +11,20 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=jhbuild&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-02-28 21:29+0000\n"
-"PO-Revision-Date: 2014-03-01 08:31+0800\n"
-"Last-Translator: Wylmer Wang <wantinghard@gmail.com>\n"
+"PO-Revision-Date: 2015-03-19 02:46+0800\n"
+"Last-Translator: Tom K. C. Chiu <tomchiukc@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <i18n-zh@googlegroups.com>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../autogen.sh:103
 #, sh-format
 msgid "Configuring $PKG_NAME without autotools"
-msgstr "正在沒有 autotools 的情況下配置 $PKG_NAME"
+msgstr "正在沒有 autotools 的情況下設置 $PKG_NAME"
 
 #: ../autogen.sh:120 ../autogen.sh:125
 #, sh-format
@@ -38,12 +39,12 @@ msgstr "無法讀取 $makefile 檔案"
 #: ../autogen.sh:145
 #, sh-format
 msgid "Unable to copy $makefile to $srcdir/Makefile"
-msgstr "无法将 $makefile 复制到 $srcdir/Makefile"
+msgstr "無法將 $makefile 複制到 $srcdir/Makefile"
 
 #: ../autogen.sh:150
 #, sh-format
 msgid "Now type `make' to compile $PKG_NAME"
-msgstr "现在输入“make”来编译 $PKG_NAME"
+msgstr "現在輸入“make”來編譯 $PKG_NAME"
 
 #: ../autogen.sh:188
 #, sh-format
@@ -97,7 +98,7 @@ msgstr "从给定模块开始构建"
 
 #: ../jhbuild/commands/autobuild.py:51
 msgid "jhautobuild report URL"
-msgstr "jhbuild 报告 URL"
+msgstr "jhbuild 報告 URL"
 
 #: ../jhbuild/commands/autobuild.py:54
 msgid "verbose mode"
@@ -228,7 +229,7 @@ msgstr "同时构建无法跳过的软依赖"
 
 #: ../jhbuild/commands/base.py:226 ../jhbuild/commands/base.py:316
 msgid "skip modules installed less than the given time ago"
-msgstr "跳过给定时间之后安装的模块"
+msgstr "跳过给定时间之后安裝的模块"
 
 #: ../jhbuild/commands/base.py:229 ../jhbuild/commands/tinderbox.py:71
 msgid "ignore missing system dependencies"
@@ -244,7 +245,7 @@ msgid ""
 "Required system dependencies not installed. Install using the command "
 "%(cmd)s or to ignore system dependencies use command-line option %(opt)s"
 msgstr ""
-"需要的系统依赖没有安装。请使用 %(cmd)s 命令安装，或使用命令行选项 %(opt)s 忽"
+"需要的系统依赖没有安裝。请使用 %(cmd)s 命令安裝，或使用命令行选项 %(opt)s 忽"
 "略系统依赖"
 
 #: ../jhbuild/commands/base.py:274
@@ -504,15 +505,15 @@ msgstr "类型："
 
 #: ../jhbuild/commands/info.py:65 ../jhbuild/commands/info.py:69
 msgid "Install version:"
-msgstr "安装版本："
+msgstr "安裝版本："
 
 #: ../jhbuild/commands/info.py:66 ../jhbuild/commands/info.py:70
 msgid "Install date:"
-msgstr "安装日期："
+msgstr "安裝日期："
 
 #: ../jhbuild/commands/info.py:69 ../jhbuild/commands/info.py:70
 msgid "not installed"
-msgstr "未安装"
+msgstr "未安裝"
 
 #: ../jhbuild/commands/info.py:75
 msgid "CVS Root:"
@@ -580,7 +581,7 @@ msgstr "建议："
 
 #: ../jhbuild/commands/info.py:117
 msgid "After:"
-msgstr "后于："
+msgstr "後於："
 
 #: ../jhbuild/commands/info.py:121
 msgid "Before:"
@@ -594,7 +595,7 @@ msgstr "依赖=%s"
 #: ../jhbuild/commands/__init__.py:86 ../jhbuild/commands/sysdeps.py:51
 #, python-format
 msgid "installed=%s"
-msgstr "已安装=%s"
+msgstr "已安裝=%s"
 
 #. Translators: This is used to separate items of package metadata
 #: ../jhbuild/commands/__init__.py:88 ../jhbuild/commands/sysdeps.py:53
@@ -613,18 +614,18 @@ msgstr "依赖的包："
 #: ../jhbuild/commands/__init__.py:95 ../jhbuild/commands/sysdeps.py:81
 #: ../jhbuild/commands/sysdeps.py:124
 msgid "  System installed packages which are too old:"
-msgstr "系统中已安装的，但过旧的包："
+msgstr "系统中已安裝的，但过旧的包："
 
 #: ../jhbuild/commands/__init__.py:105 ../jhbuild/commands/__init__.py:117
 #: ../jhbuild/commands/sysdeps.py:90 ../jhbuild/commands/sysdeps.py:118
 #: ../jhbuild/commands/sysdeps.py:133
 msgid "    (none)"
-msgstr "    (无)"
+msgstr "    (無)"
 
 #: ../jhbuild/commands/__init__.py:107 ../jhbuild/commands/sysdeps.py:92
 #: ../jhbuild/commands/sysdeps.py:135
 msgid "  No matching system package installed:"
-msgstr "  没有安装匹配的系统包："
+msgstr "沒有安裝匹配的系統包："
 
 #: ../jhbuild/commands/__init__.py:134
 msgid "JHBuild commands are:"
@@ -650,7 +651,7 @@ msgstr "没有这样的命令(您指的是“jhbuild run %s”吗？)"
 
 #: ../jhbuild/commands/make.py:33
 msgid "Compile and install the module for the current directory"
-msgstr "针对当前目录编译和安装该模块"
+msgstr "针对当前目录编译和安裝该模块"
 
 #: ../jhbuild/commands/make.py:78
 #, python-format
@@ -732,7 +733,8 @@ msgstr "在 XML 目录中找不到 %s (通常属于包“docbook-xsl”)"
 msgid ""
 "Could not find the Perl module %s (usually part of package 'libxml-parser-"
 "perl' or 'perl-XML-Parser')"
-msgstr "找不到 Perl 模块 %s(通常是包“libxml-parser-perl”或“perl-XML-Parser”的一部分。"
+msgstr ""
+"找不到 Perl 模块 %s(通常是包“libxml-parser-perl”或“perl-XML-Parser”的一部分。"
 
 #: ../jhbuild/commands/sanitycheck.py:124
 #, python-format
@@ -747,7 +749,7 @@ msgstr "curl 或 wget 未找到"
 
 #: ../jhbuild/commands/sanitycheck.py:137
 msgid "Installed git program is not the right git"
-msgstr "安装的 git 程序不是正确的 git 程序"
+msgstr "安裝的 git 程序不是正确的 git 程序"
 
 #: ../jhbuild/commands/sanitycheck.py:143
 msgid "Could not check git program"
@@ -756,7 +758,7 @@ msgstr "无法检查 git 程序"
 #: ../jhbuild/commands/sanitycheck.py:161
 #, python-format
 msgid "aclocal can't see %s macros"
-msgstr "aclocal 看不到 %s 宏"
+msgstr "aclocal 看不到 %s 巨集"
 
 #: ../jhbuild/commands/sanitycheck.py:166
 #, python-format
@@ -771,19 +773,19 @@ msgstr "打印完全对应于所检出版本的模块集"
 
 #: ../jhbuild/commands/sysdeps.py:32
 msgid "Check and install tarball dependencies using system packages"
-msgstr "使用系统包检查并安装档案包依赖"
+msgstr "使用系统包检查并安裝档案包依赖"
 
 #: ../jhbuild/commands/sysdeps.py:40
 msgid "Install pkg-config modules via system"
-msgstr "通过系统安装 pkg-config 模块"
+msgstr "通过系统安裝 pkg-config 模块"
 
 #: ../jhbuild/commands/sysdeps.py:69
 msgid "System installed packages which are new enough:"
-msgstr "系统中已安装的、足够新的包："
+msgstr "系统中已安裝的、足够新的包："
 
 #: ../jhbuild/commands/sysdeps.py:78 ../jhbuild/commands/sysdeps.py:148
 msgid "  (none)"
-msgstr "  (无)"
+msgstr "  (無)"
 
 #: ../jhbuild/commands/sysdeps.py:123
 msgid "Optional packages: (JHBuild will build the missing packages)"
@@ -794,21 +796,21 @@ msgstr "可选包：(JHBuild 会构建缺少的包)"
 msgid ""
 "%(cmd)s is required to install packages on this system. Please install "
 "%(cmd)s."
-msgstr "在此系统上安装包需要 %(cmd)s。请安装 %(cmd)s"
+msgstr "在此系统上安裝包需要 %(cmd)s。请安裝 %(cmd)s"
 
 #: ../jhbuild/commands/sysdeps.py:161
 msgid "Don't know how to install packages on this system"
-msgstr "不知道如何在此系统上安装包"
+msgstr "不知道如何在此系统上安裝包"
 
 #: ../jhbuild/commands/sysdeps.py:165
 #, python-format
 msgid "No uninstalled system dependencies to install for modules: %r"
-msgstr "没有要为模块安装的、已卸载的系统依赖：%r"
+msgstr "没有要为模块安裝的、已卸载的系统依赖：%r"
 
 #: ../jhbuild/commands/sysdeps.py:167
 #, python-format
 msgid "Installing dependencies on system: %s"
-msgstr "在系统上安装依赖：%s"
+msgstr "在系统上安裝依赖：%s"
 
 #: ../jhbuild/commands/tinderbox.py:29
 msgid "Build modules non-interactively and store build logs"
@@ -838,7 +840,7 @@ msgstr "未知的模块 %s，并且没有可以尝试自动模块的默认仓库
 #: ../jhbuild/commands/uninstall.py:64
 #, python-format
 msgid "Module %(mod)r is not installed"
-msgstr "模块 %(mod)r 未安装"
+msgstr "模块 %(mod)r 未安裝"
 
 #: ../jhbuild/config.py:180
 #, python-format
@@ -851,7 +853,7 @@ msgid ""
 "remove the old version that is still in ~/bin/ (or make it a symlink to ~/."
 "local/bin/jhbuild)"
 msgstr ""
-"JHBuild 启动脚本安装在 ~/.local/bin/jhbuild，您应该移除仍在 ~/bin/ 中的旧版本"
+"JHBuild 启动脚本安裝在 ~/.local/bin/jhbuild，您应该移除仍在 ~/bin/ 中的旧版本"
 "(或将它作为 ~/.local/bin/jhbuild 的符号链接)"
 
 #: ../jhbuild/config.py:218
@@ -930,7 +932,7 @@ msgstr "%s 必须是绝对路径"
 #: ../jhbuild/config.py:410
 #, python-format
 msgid "install prefix (%s) can not be created"
-msgstr "安装前缀(%s)无法创建"
+msgstr "安裝前缀(%s)无法创建"
 
 #: ../jhbuild/config.py:417
 #, python-format
@@ -1015,7 +1017,7 @@ msgstr "**** 正在启动模块 %s ****"
 #: ../jhbuild/frontends/buildscript.py:42
 #, python-format
 msgid "install prefix (%s) must be writable"
-msgstr "安装前缀(%s) 必须可写"
+msgstr "安裝前缀(%s) 必须可写"
 
 #: ../jhbuild/frontends/buildscript.py:49
 #, python-format
@@ -1040,7 +1042,7 @@ msgstr "检出复制目录(%s) 必须可写"
 #: ../jhbuild/frontends/buildscript.py:110
 #, python-format
 msgid "Skipping %s (installed recently)"
-msgstr "跳过 %s(为最近安装)"
+msgstr "跳过 %s(为最近安裝)"
 
 #: ../jhbuild/frontends/buildscript.py:119
 #, python-format
@@ -1055,7 +1057,7 @@ msgstr "由于 %(dep)s 无法构建，未构建 %(mod)s 模块"
 #: ../jhbuild/frontends/buildscript.py:248
 #, python-format
 msgid "Running post-installation trigger script: %r"
-msgstr "运行安装后的触发器脚本：%r"
+msgstr "运行安裝后的触发器脚本：%r"
 
 #: ../jhbuild/frontends/buildscript.py:256 ../jhbuild/frontends/gtkui.py:596
 #, python-format
@@ -1170,7 +1172,7 @@ msgstr ""
 #: ../jhbuild/frontends/terminal.py:259 ../jhbuild/frontends/terminal.py:263
 #, python-format
 msgid "########## Error running %s"
-msgstr "########## 运行 %s 出错"
+msgstr "########## 執行 %s 出錯"
 
 #: ../jhbuild/frontends/terminal.py:277
 msgid "success"
@@ -1291,7 +1293,7 @@ msgstr "Dist 检查"
 #: ../jhbuild/modtypes/distutils.py:69 ../jhbuild/modtypes/perl.py:66
 #: ../jhbuild/modtypes/waf.py:136
 msgid "Installing"
-msgstr "正在安装"
+msgstr "正在安裝"
 
 #: ../jhbuild/modtypes/autotools.py:371
 msgid "Distcleaning"
@@ -1354,12 +1356,12 @@ msgstr "正在将临时 DESTDIR %r 移动到构建前缀目录"
 msgid ""
 "Files remaining in buildroot %(dest)r; module may have installed files "
 "outside of prefix."
-msgstr "文件仍在构建根目录 %(dest)r 中；模块可能安装了前缀目录外的文件。"
+msgstr "文件仍在构建根目录 %(dest)r 中；模块可能安裝了前缀目录外的文件。"
 
 #: ../jhbuild/modtypes/__init__.py:352
 #, python-format
 msgid "Module failed to install into DESTDIR %(dest)r"
-msgstr "模块无法安装至 DESTDIR %(dest)r"
+msgstr "模块无法安裝至 DESTDIR %(dest)r"
 
 #: ../jhbuild/modtypes/__init__.py:362
 #, python-format
@@ -1374,7 +1376,7 @@ msgstr "已删除：%(file)r"
 #: ../jhbuild/modtypes/__init__.py:370
 #, python-format
 msgid "Failed to delete no longer installed file %(file)r: %(msg)s"
-msgstr "删除已不安装的 %(file)r 文件失败：%(msg)s"
+msgstr "删除已不安裝的 %(file)r 文件失败：%(msg)s"
 
 #: ../jhbuild/modtypes/__init__.py:378
 #, python-format
@@ -1383,13 +1385,13 @@ msgid ""
 "The errors are:\n"
 "  %(err)s"
 msgstr ""
-"安装遇到了错误：出现 %(num)d 个错误，已复制 %(files)d 个文件。错误为：\n"
+"安裝遇到了错误：出现 %(num)d 个错误，已复制 %(files)d 个文件。错误为：\n"
 "  %(err)s"
 
 #: ../jhbuild/modtypes/__init__.py:385
 #, python-format
 msgid "Install complete: %d files copied"
-msgstr "安装完成：复制了 %d 个文件"
+msgstr "安裝完成：复制了 %d 个文件"
 
 #: ../jhbuild/modtypes/__init__.py:433
 #, python-format
@@ -1426,15 +1428,15 @@ msgstr "make mrproper"
 
 #: ../jhbuild/modtypes/linux.py:167
 msgid "Installing kernel"
-msgstr "正在安装内核"
+msgstr "正在安裝内核"
 
 #: ../jhbuild/modtypes/linux.py:185
 msgid "Installing modules"
-msgstr "正在安装模块"
+msgstr "正在安裝模块"
 
 #: ../jhbuild/modtypes/linux.py:200
 msgid "Installing kernel headers"
-msgstr "正在安装内核头文件"
+msgstr "正在安裝内核头文件"
 
 # fuzzy, python-format
 #: ../jhbuild/modtypes/linux.py:240
@@ -1554,7 +1556,7 @@ msgstr "删除 %(file)r 失败：%(msg)s"
 
 #: ../jhbuild/utils/systeminstall.py:140
 msgid "No suitable root privilege command found; you should install \"pkexec\""
-msgstr "没有找到适合的，具有 root 权限的命令；您应该重新安装“pkexec”"
+msgstr "没有找到适合的，具有 root 权限的命令；您应该重新安裝“pkexec”"
 
 #: ../jhbuild/utils/systeminstall.py:172 ../jhbuild/utils/systeminstall.py:175
 #, python-format
@@ -1563,7 +1565,7 @@ msgstr "包套件：%s"
 
 #: ../jhbuild/utils/systeminstall.py:251
 msgid "Nothing available to install"
-msgstr "无可安装"
+msgstr "无可安裝"
 
 #: ../jhbuild/utils/systeminstall.py:254
 #, python-format
@@ -1571,7 +1573,7 @@ msgid ""
 "Installing:\n"
 "  %s"
 msgstr ""
-"正在安装：\n"
+"正在安裝：\n"
 "  %s"
 
 #: ../jhbuild/utils/systeminstall.py:260
@@ -1580,7 +1582,7 @@ msgstr "完成！"
 
 #: ../jhbuild/utils/systeminstall.py:271
 msgid "Using yum to install packages.  Please wait."
-msgstr "正在使用 yum 安装包。请稍候。"
+msgstr "正在使用 yum 安裝包。请稍候。"
 
 #: ../jhbuild/utils/systeminstall.py:274
 #, python-format
@@ -1588,12 +1590,12 @@ msgid ""
 "Installing:\n"
 "  %(pkgs)s"
 msgstr ""
-"正在安装：\n"
+"正在安裝：\n"
 "  %(pkgs)s"
 
 #: ../jhbuild/utils/systeminstall.py:284 ../jhbuild/utils/systeminstall.py:334
 msgid "Nothing to install"
-msgstr "无可安装"
+msgstr "无可安裝"
 
 #: ../jhbuild/utils/systeminstall.py:315
 msgid "Using apt-file to search for providers; this may be slow.  Please wait."
@@ -1607,7 +1609,7 @@ msgstr "没有找到 %(id)s 的本地包(%(filename)s)"
 #: ../jhbuild/utils/systeminstall.py:329
 #, python-format
 msgid "Installing: %(pkgs)s"
-msgstr "正在安装：%(pkgs)s"
+msgstr "正在安裝：%(pkgs)s"
 
 #: ../jhbuild/utils/trigger.py:57
 #, python-format
@@ -1911,14 +1913,14 @@ msgstr "无法检出 quilt 补丁集"
 #~ msgstr "此选项不再有作用"
 
 #~ msgid "do not use system installed modules"
-#~ msgstr "不要使用系统中安装的模块"
+#~ msgstr "不要使用系统中安裝的模块"
 
 #~ msgid ""
 #~ "some modules (%s) were automatically ignored as a sufficient enough "
 #~ "version was found installed on your system. Use --ignore-system if you "
 #~ "want to build them nevertheless."
 #~ msgstr ""
-#~ "由于发现您的系统中已经安装了足够新的版本，一些模块(%s)被自动忽略。虽然如"
+#~ "由于发现您的系统中已经安裝了足够新的版本，一些模块(%s)被自动忽略。虽然如"
 #~ "此，如果您愿意，可以使用 --ignore-system 选项来构建它们。"
 
 #~ msgid ""
@@ -1926,51 +1928,7 @@ msgstr "无法检出 quilt 补丁集"
 #~ msgstr "部分构建未启用；请向 ~/.jhbuildrc 中添加 partial_build = True"
 
 #~ msgid "  %(pkg)s (required=%(req)s, installed=%(installed)s)"
-#~ msgstr "  %(pkg)s (要求=%(req)s，已安装=%(installed)s)"
+#~ msgstr "  %(pkg)s (要求=%(req)s，已安裝=%(installed)s)"
 
 #~ msgid "  %(pkg)s (required=%(req)s)"
 #~ msgstr "  %(pkg)s (要求=%(req)s)"
-
-# fuzzy, python-format
-#~ msgid ""
-#~ "Default repository=%(missing)s not found for module id=%(module)s. "
-#~ "Possible repositories are %(possible)s"
-#~ msgstr ""
-#~ "找不到 id=%(module)s 的模块对应的默认仓库 repository=%(missing)s。可能的仓"
-#~ "库为 %(possible)s"
-
-#~ msgid "Failed to rename %(src)r to %(dest)r: %(msg)s"
-#~ msgstr "重命名 %(src)r 为 %(dest)r 失败：%(msg)s"
-
-#~ msgid "module \"%s\" not found"
-#~ msgstr "找不到 \"%s\" 模块"
-
-#~ msgid "gnome-doc-prepare not available"
-#~ msgstr "gnome-doc-prepare 不可用"
-
-#~ msgid "Arch Version:"
-#~ msgstr "档案版本："
-
-#~ msgid "command not found"
-#~ msgstr "找不到命令"
-
-#~ msgid "could not register archive %s"
-#~ msgstr "无法注册档案 %s"
-
-#~ msgid "archive %s not registered"
-#~ msgstr "档案 %s 未能注册"
-
-#~ msgid "date based checkout not yet supported"
-#~ msgstr "尚未支持基于日期的检出"
-
-#~ msgid "could not create directory %s"
-#~ msgstr "无法创建 %s 目录"
-
-#~ msgid "Missing ant build tool"
-#~ msgstr "缺少 ant 构建工具"
-
-#~ msgid "Uninstalling"
-#~ msgstr "正在卸载"
-
-#~ msgid "unable to parse '%s' as relative time."
-#~ msgstr "无法将 '%s' 解析为相对时间。"
