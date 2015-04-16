@@ -189,10 +189,7 @@ class Package:
 
     def eval_args(self, args):
         args = args.replace('${prefix}', self.config.prefix)
-        libsubdir = 'lib'
-        if self.config.use_lib64:
-            libsubdir = 'lib64'
-        libdir = os.path.join(self.config.prefix, libsubdir)
+        libdir = os.path.join(self.config.prefix, 'lib')
         args = args.replace('${libdir}', libdir)
         return args
 
@@ -294,18 +291,11 @@ them into the prefix."""
         prefix_without_drive = os.path.splitdrive(buildscript.config.prefix)[1]
         stripped_prefix = prefix_without_drive[1:]
 
-        previous_entry = buildscript.moduleset.packagedb.get(self.name)
-        if previous_entry:
-            previous_contents = previous_entry.get_manifest()
-        else:
-            previous_contents = None
-
-        new_contents = fileutils.accumulate_dirtree_contents(destdir)
-
         install_succeeded = False
         save_broken_tree = False
         broken_name = destdir + '-broken'
         destdir_prefix = os.path.join(destdir, stripped_prefix)
+        new_contents = fileutils.accumulate_dirtree_contents(destdir_prefix)
         errors = []
         if os.path.isdir(destdir_prefix):
             destdir_install = True
@@ -351,14 +341,20 @@ them into the prefix."""
         if not install_succeeded:
             raise CommandError(_("Module failed to install into DESTDIR %(dest)r") % {'dest': broken_name})
         else:
-            absolute_new_contents = map(lambda x: '/' + x, new_contents)
-            to_delete = []
-            if previous_contents is not None:
-                for path in previous_contents:
-                    if path not in absolute_new_contents:
-                        to_delete.append(path)
-                # Ensure we're only attempting to delete files in the prefix
-                to_delete = fileutils.filter_files_by_prefix(self.config, to_delete)
+            to_delete = set()
+            previous_entry = buildscript.moduleset.packagedb.get(self.name)
+            if previous_entry:
+                previous_contents = previous_entry.get_manifest()
+                if previous_contents:
+                    to_delete.update(fileutils.filter_files_by_prefix(self.config, previous_contents))
+
+            for filename in new_contents:
+                to_delete.discard (os.path.join(self.config.prefix, filename))
+
+            if to_delete:
+                # paranoid double-check
+                assert to_delete == set(fileutils.filter_files_by_prefix(self.config, to_delete))
+
                 logging.info(_('%d files remaining from previous build') % (len(to_delete),))
                 for (path, was_deleted, error_string) in fileutils.remove_files_and_dirs(to_delete, allow_nonempty_dirs=True):
                     if was_deleted:
@@ -371,7 +367,7 @@ them into the prefix."""
                                                                                                           'msg': error_string})
 
             buildscript.moduleset.packagedb.add(self.name, revision or '',
-                                                absolute_new_contents,
+                                                new_contents,
                                                 self.configure_cmd)
 
         if errors:
@@ -493,19 +489,22 @@ them into the prefix."""
         instance.supports_parallel_build = (node.getAttribute('supports-parallel-builds') != 'no')
         instance.config = config
         pkg_config = find_first_child_node_content(node, 'pkg-config')
-        if pkg_config != '':
+        if pkg_config:
             instance.pkg_config = pkg_config
+            instance.dependencies += ['pkg-config']
+        instance.dependencies += instance.branch.repository.get_sysdeps()
         return instance
 
 class MakeModule(Package):
     '''A base class for modules that use the command 'make' within the build
     process.'''
     def __init__(self, name, branch=None, makeargs='', makeinstallargs='',
-                  makefile='Makefile'):
+                  makefile='Makefile', needs_gmake=False):
         Package.__init__(self, name, branch=branch)
         self.makeargs = makeargs
         self.makeinstallargs = makeinstallargs
         self.makefile = makefile
+        self.needs_gmake = needs_gmake
 
     def get_makeargs(self, buildscript, add_parallel=True):
         makeargs = ' %s %s' % (self.makeargs,
@@ -516,10 +515,27 @@ class MakeModule(Package):
             if ' -j' not in makeargs:
                 arg = '-j %s' % (buildscript.config.jobs, )
                 makeargs = makeargs + ' ' + arg
-        elif not self.supports_parallel_build and ' -j' in makeargs:
-            makeargs = re.sub(r'-j\w*\d+', '', makeargs)
+        elif not self.supports_parallel_build:
+            makeargs = re.sub(r'-j\w*\d+', '', makeargs) + ' -j 1'
         return self.eval_args(makeargs).strip()
 
+    def get_makecmd(self, config):
+        if self.needs_gmake and 'gmake' in config.conditions:
+            return 'gmake'
+        else:
+            return 'make'
+
+    def make(self, buildscript, target='', pre='', makeargs=None):
+        makecmd = os.environ.get('MAKE', self.get_makecmd(buildscript.config))
+
+        if makeargs is None:
+            makeargs = self.get_makeargs(self, buildscript)
+
+        cmd = '{pre}{make} {makeargs} {target}'.format(pre=pre,
+                                                        make=makecmd,
+                                                        makeargs=makeargs,
+                                                        target=target)
+        buildscript.execute(cmd, cwd = self.get_builddir(buildscript), extra_env = self.extra_env)
 
 class DownloadableModule:
     PHASE_CHECKOUT = 'checkout'

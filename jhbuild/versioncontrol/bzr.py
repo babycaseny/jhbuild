@@ -101,6 +101,9 @@ class BzrRepository(Repository):
         return [sxml.repository(type='bzr', name=self.name, href=self.href,
                     trunk=self.trunk_template, branches=self.branches_template)]
 
+    def get_sysdeps(self):
+        return ['bzr']
+
 class BzrBranch(Branch):
     """A class representing a Bazaar branch."""
 
@@ -185,7 +188,11 @@ Remove it or change your dvcs_mirror_dir settings.""") % self.srcdir)
             self.create_mirror(buildscript)
             self.real_update(buildscript)
         else:
-            cmd = ['bzr', 'branch'] + self.revspec + [self.module, self.srcdir]
+            if self.config.shallow_clone:
+                cmd = ['bzr', 'co', '--light']
+            else:
+                cmd = ['bzr', 'branch']
+            cmd += self.revspec + [self.module, self.srcdir]
             buildscript.execute(cmd)
 
     def _export(self, buildscript):
@@ -193,9 +200,14 @@ Remove it or change your dvcs_mirror_dir settings.""") % self.srcdir)
         buildscript.execute(cmd)
 
     def real_update(self, buildscript):
-        cmd = ['bzr', 'pull'] + self.revspec + [self.module, '-d', self.srcdir]
-        buildscript.execute(cmd)
-        cmd = ['bzr', 'update'] + self.revspec + [self.srcdir]
+        # Do not assume that shallow_clone option was the same
+        # during checkout as now.
+        info = get_output(['bzr', 'info', self.srcdir], cwd=self.srcdir)
+        if info.startswith('Light'):
+            cmd = ['bzr', 'update'] + self.revspec
+        else:
+            cmd = ['bzr', 'pull'] + self.revspec + [self.module]
+        buildscript.execute(cmd, cwd=self.srcdir)
 
     def _update(self, buildscript, copydir=None):
         self.create_mirror(buildscript)

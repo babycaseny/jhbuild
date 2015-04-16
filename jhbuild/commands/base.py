@@ -322,6 +322,7 @@ class cmd_buildone(BuildCommand):
         module_set = jhbuild.moduleset.load(config)
         module_list = []
         for modname in args:
+            modname = modname.rstrip(os.sep)
             try:
                 module = module_set.get_module(modname, ignore_case=True)
             except KeyError, e:
@@ -373,35 +374,21 @@ class cmd_run(Command):
                     'command':args[0], 'err':str(exc)})
 
     def run(self, config, options, args, help=None):
-        if options.in_builddir:
+        module_name = options.in_builddir or options.in_checkoutdir
+        if module_name:
             module_set = jhbuild.moduleset.load(config)
             try:
-                module_list = [module_set.get_module(options.in_builddir, ignore_case = True)
-                               for modname in args]
+                module = module_set.get_module(module_name, ignore_case = True)
             except KeyError, e:
                 raise FatalError(_("A module called '%s' could not be found.") % e)
 
-            build = jhbuild.frontends.get_buildscript(config, module_list, module_set=module_set)
-            builddir = module_list[0].get_builddir(build)
+            build = jhbuild.frontends.get_buildscript(config, [module], module_set=module_set)
+            if options.in_builddir:
+                workingdir = module.get_builddir(build)
+            else:
+                workingdir = module.get_srcdir(build)
             try:
-                build.execute(args, cwd=builddir)
-            except CommandError, exc:
-                if args:
-                    raise FatalError(_("Unable to execute the command '%s'") % args[0])
-                else:
-                    raise FatalError(str(exc))
-        elif options.in_checkoutdir:
-            module_set = jhbuild.moduleset.load(config)
-            try:
-                module_list = [module_set.get_module(options.in_checkoutdir, ignore_case = True)
-                               for modname in args]
-            except KeyError, e:
-                raise FatalError(_("A module called '%s' could not be found.") % e)
-
-            build = jhbuild.frontends.get_buildscript(config, module_list, module_set=module_set)
-            checkoutdir = module_list[0].get_srcdir(build)
-            try:
-                build.execute(args, cwd=checkoutdir)
+                build.execute(args, cwd=workingdir)
             except CommandError, exc:
                 if args:
                     raise FatalError(_("Unable to execute the command '%s'") % args[0])
@@ -532,3 +519,21 @@ class cmd_dot(Command):
         module_set.write_dot(modules, **kwargs)
 
 register_command(cmd_dot)
+
+class cmd_postinst(Command):
+    doc = N_('Run post-install triggers for named modules (or all)')
+
+    name = 'postinst'
+    usage_args = N_('[ modules ... ]')
+
+    def __init__(self):
+        Command.__init__(self, [])
+
+    def run(self, config, options, args, help=None):
+        config.set_from_cmdline_options(options)
+
+        module_set = jhbuild.moduleset.load(config)
+        build = jhbuild.frontends.get_buildscript(config, args, module_set=module_set)
+        return build.run_triggers(args)
+
+register_command(cmd_postinst)

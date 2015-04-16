@@ -1,4 +1,4 @@
-SUBDIRS = buildbot commands cut_n_paste frontends modtypes utils versioncontrol
+SUBDIRS = buildbot commands frontends modtypes utils versioncontrol
 
 appdir = $(pythondir)/jhbuild/
 
@@ -6,8 +6,11 @@ app_PYTHON = \
 	__init__.py  \
 	config.py \
 	defaults.jhbuildrc \
+	environment.py \
 	errors.py \
 	main.py  \
 	moduleset.py \
 	monkeypatch.py
 
+sitecustomizedir = $(pkgdatadir)/sitecustomize
+sitecustomize_DATA = sitecustomize/sitecustomize.py

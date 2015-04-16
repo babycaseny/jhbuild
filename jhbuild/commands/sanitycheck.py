@@ -51,7 +51,14 @@ class cmd_sanitycheck(Command):
     def run(self, config, options, args, help=None):
         if args:
             raise UsageError(_('no extra arguments expected'))
-    
+
+        # try creating jhbuild directories before checking they are accessible.
+        try:
+            os.makedirs(config.checkoutroot)
+            os.makedirs(config.prefix)
+        except OSError:
+            pass
+
         # check whether the checkout root and install prefix are writable
         if not (os.path.isdir(config.checkoutroot) and
                 os.access(config.checkoutroot, os.R_OK|os.W_OK|os.X_OK)):
@@ -59,6 +66,8 @@ class cmd_sanitycheck(Command):
         if not (os.path.isdir(config.prefix) and
                 os.access(config.prefix, os.R_OK|os.W_OK|os.X_OK)):
             uprint(_('install prefix (%s) is not writable') % config.prefix)
+
+        autoconf = True
 
         # check whether various tools are installed
         if not check_version(['libtoolize', '--version'],
@@ -72,33 +81,24 @@ class cmd_sanitycheck(Command):
             uprint(_('%s not found') % 'pkg-config >= 0.14.0')
         if not check_version(['autoconf', '--version'],
                              r'autoconf \([^)]*\) ([\d.]+)', '2.53'):
+            autoconf = False
             uprint(_('%s not found') % 'autoconf >= 2.53')
         if not check_version(['automake', '--version'],
                              r'automake \([^)]*\) ([\d.]+)', '1.10'):
             uprint(_('%s not found') % 'automake >= 1.10')
 
-        try:
-            not_in_path = []
-            path = get_aclocal_path()
-
-            macros = ['libtool.m4', 'gettext.m4', 'pkg.m4']
-            for macro in macros:
-                if not inpath (macro, path):
-                    uprint(_("aclocal can't see %s macros") % (macro.split('.m4')[0]))
-                    if not_in_path.count(macro) == 0:
-                        not_in_path.append(macro)
-
-            if len(not_in_path) > 0:
-                uprint(_("Please copy the lacking macros (%(macros)s) in one of the following paths: %(path)s") % \
-                       {'macros': ', '.join(not_in_path), 'path': ', '.join(path)})
-
-        except CommandError, exc:
-            uprint(str(exc))
+        if (autoconf):
+            self.check_m4()
 
         # XML catalog sanity checks
-        if not os.access('/etc/xml/catalog', os.R_OK):
-            uprint(_('Could not find XML catalog'))
-        else:
+        xmlcatalog = True
+        try:
+            get_output(['which', 'xmlcatalog'])
+        except:
+            xmlcatalog = False
+            uprint(_('Could not find XML catalog (usually part of the package \'libxml2-utils\')'))
+
+        if (xmlcatalog):
             for (item, name) in [('-//OASIS//DTD DocBook XML V4.1.2//EN',
                                   'DocBook XML DTD V4.1.2'),
                                  ('http://docbook.sourceforge.net/release/xsl/current/html/chunk.xsl',
@@ -106,22 +106,22 @@ class cmd_sanitycheck(Command):
                 try:
                     data = get_output(['xmlcatalog', '/etc/xml/catalog', item])
                 except:
-                    uprint(_('Could not find %s in XML catalog') % name            )
+                    uprint(_('Could not find %s in XML catalog (usually part of package \'docbook-xsl\')') % name)
 
-        # Perl modules used by tools such as intltool:
-        for perlmod in [ 'XML::Parser' ]:
-            try:
-                get_output(['perl', '-M%s' % perlmod, '-e', 'exit'])
-            except:
-                uprint(_('Could not find the Perl module %s') % perlmod)
-                
+        # Perl module used by tools such as intltool:
+        perlmod = 'XML::Parser'
+        try:
+            get_output(['perl', '-M%s' % perlmod, '-e', 'exit'])
+        except:
+            uprint(_('Could not find the Perl module %s (usually part of package \'libxml-parser-perl\' or \'perl-XML-Parser\')') % perlmod)
+
         # check for cvs:
         if not inpath('cvs', os.environ['PATH'].split(os.pathsep)):
             uprint(_('%s not found') % 'cvs')
 
         # check for svn:
         if not inpath('svn', os.environ['PATH'].split(os.pathsep)):
-            uprint(_('%s not found') % 'svn')
+            uprint(_('%s not found (usually part of the package \'subversion\')') % 'svn')
 
         if not (inpath('curl', os.environ['PATH'].split(os.pathsep)) or
                 inpath('wget', os.environ['PATH'].split(os.pathsep))):
@@ -149,5 +149,24 @@ class cmd_sanitycheck(Command):
             uprint(_('%s not found') % 'bison')
         if not inpath('xzcat', os.environ['PATH'].split(os.pathsep)):
             uprint(_('%s not found') % 'xzcat')
+
+    def check_m4(self):
+        try:
+            not_in_path = []
+            path = get_aclocal_path()
+
+            macros = ['libtool.m4', 'gettext.m4', 'pkg.m4']
+            for macro in macros:
+                if not inpath (macro, path):
+                    uprint(_("aclocal can't see %s macros") % (macro.split('.m4')[0]))
+                    if not_in_path.count(macro) == 0:
+                        not_in_path.append(macro)
+
+            if len(not_in_path) > 0:
+                uprint(_("Please copy the lacking macros (%(macros)s) in one of the following paths: %(path)s") % \
+                       {'macros': ', '.join(not_in_path), 'path': ', '.join(path)})
+
+        except CommandError, exc:
+            uprint(str(exc))
 
 register_command(cmd_sanitycheck)

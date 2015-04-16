@@ -1,5 +1,5 @@
 AC_INIT([jhbuild],
-        [3.5.92],
+        [3.12.1],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=jhbuild],
         [jhbuild])
 
@@ -18,9 +18,6 @@ PKG_PROG_PKG_CONFIG
 
 # i18n
 IT_PROG_INTLTOOL([0.40.0])
-
-AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.17])
 
 GETTEXT_PACKAGE=AC_PACKAGE_TARNAME
 AC_SUBST([GETTEXT_PACKAGE])
@@ -49,7 +46,6 @@ AC_CONFIG_FILES([
 	jhbuild/buildbot/status/web/Makefile
 	jhbuild/buildbot/status/Makefile
 	jhbuild/commands/Makefile
-	jhbuild/cut_n_paste/Makefile
 	jhbuild/frontends/Makefile
 	jhbuild/modtypes/Makefile
 	jhbuild/utils/Makefile

@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python2
 # jhbuild - a tool to ease building collections of source packages
 # Copyright (C) 2001-2006  James Henstridge
 # Copyright (C) 2007-2008  Frederic Peters
@@ -88,7 +88,8 @@ class TestConfig(jhbuild.config.Config):
         pass
 
     def real_setup_env(self):
-        jhbuild.config.Config.setup_env(self)
+        from jhbuild.environment import setup_env
+        setup_env(self.prefix)
 
 class JhbuildConfigTestCase(unittest.TestCase):
     """A test case that creates a mock configuration and temporary directory."""
@@ -110,7 +111,7 @@ class JhbuildConfigTestCase(unittest.TestCase):
 
     def make_config(self):
         temp_dir = self.make_temp_dir()
-        config = TestConfig(None)
+        config = TestConfig(None, [])
         config.checkoutroot = os.path.abspath(os.path.join(temp_dir, 'checkout'))
         config.prefix = os.path.abspath(os.path.join(temp_dir, 'prefix'))
         config.top_builddir = os.path.join(config.prefix, '_jhbuild')

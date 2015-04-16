@@ -15,17 +15,17 @@
             version="1.0.19"/>
   </systemmodule>
 
+  <systemmodule id="avahi">
+    <pkg-config>avahi-gobject.pc</pkg-config>
+    <branch repo="system"
+            version="0.6.31"/>
+  </systemmodule>
+
   <systemmodule id="bison">
     <branch repo="system" version="2.0"/>
     <systemdependencies>
       <dep type="path" name="bison"/>
     </systemdependencies>
-  </systemmodule>
-
-  <systemmodule id="bluez">
-    <pkg-config>bluez.pc</pkg-config>
-    <branch repo="system"
-            version="4.66"/>
   </systemmodule>
 
   <systemmodule id="bogofilter">
@@ -40,12 +40,6 @@
     <systemdependencies>
       <dep type="c_include" name="boost/variant.hpp"/>
     </systemdependencies>
-  </systemmodule>
-
-  <systemmodule id="cairo">
-    <pkg-config>cairo.pc</pkg-config>
-    <branch repo="system"
-            version="1.10.2"/>
   </systemmodule>
 
   <systemmodule id="cairomm">
@@ -165,16 +159,27 @@
     </systemdependencies>
   </systemmodule>
 
+  <systemmodule id="gbm">
+    <pkg-config>gbm.pc</pkg-config>
+    <branch repo="system"/>
+  </systemmodule>
+
   <systemmodule id="gc">
     <pkg-config>bdw-gc.pc</pkg-config>
     <branch repo="system"/>
   </systemmodule>
 
-  <systemmodule id="gdbm">
+  <systemmodule id="gdb">
     <branch repo="system"/>
     <systemdependencies>
-      <dep type="c_include" name="gdbm.h"/>
+      <dep type="path"
+           name="gdb"/>
     </systemdependencies>
+  </systemmodule>
+
+  <systemmodule id="geoclue1">
+    <pkg-config>geoclue.pc</pkg-config>
+    <branch repo="system"/>
   </systemmodule>
 
   <systemmodule id="gettext">
@@ -182,6 +187,11 @@
     <systemdependencies>
       <dep type="c_include" name="gettext-po.h"/>
     </systemdependencies>
+  </systemmodule>
+
+  <systemmodule id="gexiv2">
+    <pkg-config>gexiv2.pc</pkg-config>
+    <branch repo="system"/>
   </systemmodule>
 
   <systemmodule id="gl">
@@ -198,12 +208,6 @@
     <pkg-config>gmime-2.6.pc</pkg-config>
     <branch repo="system"
             version="2.6.6"/>
-  </systemmodule>
-
-  <systemmodule id="gnutls">
-    <pkg-config>gnutls.pc</pkg-config>
-    <branch repo="system"
-            version="2.12.8"/>
   </systemmodule>
 
   <systemmodule id="gpgme">
@@ -339,7 +343,7 @@
     <branch repo="system"/>
   </systemmodule>
 
-  <systemmodule id="xorg-macros">
+  <systemmodule id="xorg-x11-util-macros">
     <pkg-config>xorg-macros.pc</pkg-config>
     <branch repo="system"/>
   </systemmodule>
@@ -366,10 +370,10 @@
     <branch repo="system" version="2.8.0"/>
   </systemmodule>
 
-  <systemmodule id="libdaemon">
-    <pkg-config>libdaemon.pc</pkg-config>
+  <systemmodule id="libcanberra">
+    <pkg-config>libcanberra.pc</pkg-config>
     <branch repo="system"
-            version="0.14"/>
+            version="0.30"/>
   </systemmodule>
 
   <systemmodule id="libdb">
@@ -377,6 +381,12 @@
     <systemdependencies>
       <dep type="c_include" name="db.h"/>
     </systemdependencies>
+  </systemmodule>
+
+  <systemmodule id="libdrm">
+    <pkg-config>libdrm.pc</pkg-config>
+    <branch repo="system"
+            version="2.4.45"/>
   </systemmodule>
 
   <systemmodule id="libexif">
@@ -444,9 +454,9 @@
     <branch repo="system"/>
   </systemmodule>
 
-  <systemmodule id="libquvi">
-    <pkg-config>libquvi.pc</pkg-config>
-    <branch repo="system" version="0.4.0"/>
+  <systemmodule id="libraw">
+    <pkg-config>libraw.pc</pkg-config>
+    <branch repo="system"/>
   </systemmodule>
 
   <systemmodule id="libsndfile">
@@ -478,7 +488,7 @@
   <systemmodule id="libudev">
     <pkg-config>libudev.pc</pkg-config>
     <branch repo="system"
-            version="173"/>
+            version="143"/>
   </systemmodule>
 
   <systemmodule id="libunistring">
@@ -543,10 +553,10 @@
       </systemdependencies>
   </systemmodule>
 
-  <systemmodule id="libzeitgeist">
-    <pkg-config>zeitgeist-1.0.pc</pkg-config>
+  <systemmodule id="mesa-libGLES">
+    <pkg-config>glesv2.pc</pkg-config>
     <branch repo="system"
-            version="0.3.18"/>
+            version="9.2"/>
   </systemmodule>
 
   <systemmodule id="mpfr">
@@ -618,8 +628,9 @@
   </systemmodule>
 
   <systemmodule id="python2-devel">
-    <pkg-config>python.pc</pkg-config>
-    <branch repo="system" version="2.5"/>
+    <pkg-config>python2.pc</pkg-config>
+    <branch repo="system"
+            version="2.5"/>
   </systemmodule>
 
   <systemmodule id="python-devel">
@@ -708,6 +719,12 @@
     <branch repo="system" version="4.2"/>
   </systemmodule>
 
+  <systemmodule id="wayland-egl">
+    <pkg-config>wayland-egl.pc</pkg-config>
+    <branch repo="system"
+            version="1.0"/>
+  </systemmodule>
+
   <systemmodule id="wget">
     <branch repo="system"/>
     <systemdependencies>
@@ -762,4 +779,18 @@
             version="3.0.0"/>
   </systemmodule>
 
+  <systemmodule id="xfont">
+    <pkg-config>xfont.pc</pkg-config>
+    <branch repo="system"/>
+  </systemmodule>
+
+  <systemmodule id="xtrans">
+    <pkg-config>xtrans.pc</pkg-config>
+    <branch repo="system"/>
+  </systemmodule>
+
+  <systemmodule id="gtkspell-3">
+    <pkg-config>gtkspell3-3.0.pc</pkg-config>
+    <branch repo="system"/>
+  </systemmodule>
 </moduleset>

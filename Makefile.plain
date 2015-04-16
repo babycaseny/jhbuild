@@ -1,7 +1,7 @@
 PACKAGE = jhbuild
 VERSION = 0.1
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -O2
 
 MAKE ?= make
@@ -38,9 +38,10 @@ install: include-check install-check
 
 	install -m755 install-check $(bindir)/install-check
 
-	# if ~/bin/jbuild exists, it is most likely an old version, and it will
-	# not work; so rename it and install a symlink to the new version
-	# instead.
+# if ~/bin/jbuild exists, it is most likely an old version, and it will
+# not work; so rename it and install a symlink to the new version
+# instead.
+# (This comment is intentionally not indented, otherwise make prints it)
 	@if [ -e "$(HOME)/bin/jhbuild" ] && [ ! $(bindir) -ef $(HOME)/bin ]; then \
 		mv "$(HOME)/bin/jhbuild" "$(HOME)/bin/jhbuild.old" ; \
 		ln -s $(bindir)/jhbuild "$(HOME)/bin/jhbuild" ; \

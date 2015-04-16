@@ -1,6 +1,7 @@
 # jhbuild - a tool to ease building collections of source packages
 # Copyright (C) 2001-2006  James Henstridge
 # Copyright (C) 2007-2008  Frederic Peters
+# Copyright (C) 2014 Canonical Limited
 #
 #   config.py: configuration file parser
 #
@@ -28,8 +29,9 @@ import types
 import logging
 import __builtin__
 
-from jhbuild.errors import UsageError, FatalError, CommandError
-from jhbuild.utils.cmds import get_output
+from jhbuild.environment import setup_env, setup_env_defaults, addpath
+from jhbuild.errors import FatalError
+from jhbuild.utils import sysid
 
 if sys.platform.startswith('win'):
     # For munging paths for MSYS's benefit
@@ -46,7 +48,7 @@ _known_keys = [ 'moduleset', 'modules', 'skip', 'tags', 'prefix',
                 'builddir_pattern', 'module_autogenargs', 'module_makeargs',
                 'interact', 'buildscript', 'nonetwork', 'nobuild',
                 'alwaysautogen', 'noinstall', 'makeclean', 'makedistclean',
-                'makecheck', 'module_makecheck', 'use_lib64',
+                'makecheck', 'module_makecheck', 'system_libdirs',
                 'tinderbox_outputdir', 'sticky_date', 'tarballdir',
                 'pretty_print', 'svn_program', 'makedist', 'makedistcheck',
                 'nonotify', 'notrayicon', 'cvs_program', 'checkout_mode',
@@ -63,80 +65,12 @@ _known_keys = [ 'moduleset', 'modules', 'skip', 'tags', 'prefix',
                 'print_command_pattern', 'static_analyzer',
                 'module_static_analyzer', 'static_analyzer_template',
                 'static_analyzer_outputdir', 'check_sysdeps', 'system_prefix',
-                'help_website',
+                'help_website', 'conditions', 'extra_prefixes', 'disable_Werror'
               ]
 
 env_prepends = {}
 def prependpath(envvar, path):
     env_prepends.setdefault(envvar, []).append(path)
-
-def addpath(envvar, path):
-    '''Adds a path to an environment variable.'''
-    # special case ACLOCAL_FLAGS
-    if envvar in [ 'ACLOCAL_FLAGS' ]:
-        if sys.platform.startswith('win'):
-            path = jhbuild.utils.subprocess_win32.fix_path_for_msys(path)
-
-        envval = os.environ.get(envvar, '-I %s' % path)
-        parts = ['-I', path] + envval.split()
-        i = 2
-        while i < len(parts)-1:
-            if parts[i] == '-I':
-                # check if "-I parts[i]" comes earlier
-                for j in range(0, i-1):
-                    if parts[j] == '-I' and parts[j+1] == parts[i+1]:
-                        del parts[i:i+2]
-                        break
-                else:
-                    i += 2
-            else:
-                i += 1
-        envval = ' '.join(parts)
-    elif envvar in [ 'LDFLAGS', 'CFLAGS', 'CXXFLAGS' ]:
-        if sys.platform.startswith('win'):
-            path = jhbuild.utils.subprocess_win32.fix_path_for_msys(path)
-
-        envval = os.environ.get(envvar)
-        if envval:
-            envval = path + ' ' + envval
-        else:
-            envval = path
-    else:
-        if envvar == 'PATH':
-            # PATH is special cased on Windows to allow execution without
-            # sh.exe. The other env vars (like LD_LIBRARY_PATH) don't mean
-            # anything to native Windows so they stay in UNIX format, but
-            # PATH is kept in Windows format (; separated, c:/ or c:\ format
-            # paths) so native Popen works.
-            pathsep = os.pathsep
-        else:
-            pathsep = ':'
-            if sys.platform.startswith('win'):
-                path = jhbuild.utils.subprocess_win32.fix_path_for_msys(path)
-
-            if sys.platform.startswith('win') and len(path) > 1 and \
-               path[1] == ':':
-                # Windows: Don't allow c:/ style paths in :-separated env vars
-                # for obvious reasons. /c/ style paths are valid - if a var is
-                # separated by : it will only be of interest to programs inside
-                # MSYS anyway.
-                path='/'+path[0]+path[2:]
-
-        envval = os.environ.get(envvar, path)
-        parts = envval.split(pathsep)
-        parts.insert(0, path)
-        # remove duplicate entries:
-        i = 1
-        while i < len(parts):
-            if parts[i] in parts[:i]:
-                del parts[i]
-            elif envvar == 'PYTHONPATH' and parts[i] == "":
-                del parts[i]
-            else:
-                i += 1
-        envval = pathsep.join(parts)
-
-    os.environ[envvar] = envval
 
 def parse_relative_time(s):
     m = re.match(r'(\d+) *([smhdw])', s.lower())
@@ -146,11 +80,20 @@ def parse_relative_time(s):
     else:
         raise ValueError
 
+def modify_conditions(conditions, conditions_modifiers):
+    for flag in conditions_modifiers:
+        for mod in flag.split(','):
+            if mod.startswith('+'):
+                conditions.add(mod[1:])
+            elif mod.startswith('-'):
+                conditions.discard(mod[1:])
+            else:
+                raise FatalError(_("Invalid condition set modifier: '%s'.  Must start with '+' or '-'.") % mod)
 
 class Config:
     _orig_environ = None
 
-    def __init__(self, filename):
+    def __init__(self, filename, conditions_modifiers):
         self._config = {
             '__file__': _defaults_file,
             'addpath':  addpath,
@@ -160,31 +103,8 @@ class Config:
 
         if not self._orig_environ:
             self.__dict__['_orig_environ'] = os.environ.copy()
+        os.environ['UNMANGLED_LD_LIBRARY_PATH'] = os.environ.get('LD_LIBRARY_PATH', '')
         os.environ['UNMANGLED_PATH'] = os.environ.get('PATH', '')
-
-        try:
-            SRCDIR
-        except NameError:
-            # this happens when an old jhbuild script is called
-            if os.path.realpath(sys.argv[0]) == os.path.expanduser('~/bin/jhbuild'):
-                # if it was installed in ~/bin/, it may be because the new one
-                # is installed in ~/.local/bin/jhbuild
-                if os.path.exists(os.path.expanduser('~/.local/bin/jhbuild')):
-                    logging.warning(
-                            _('JHBuild start script has been installed in '
-                              '~/.local/bin/jhbuild, you should remove the '
-                              'old version that is still in ~/bin/ (or make '
-                              'it a symlink to ~/.local/bin/jhbuild)'))
-            if os.path.exists(os.path.join(sys.path[0], 'jhbuild')):
-                # the old start script inserted its source directory in
-                # sys.path, use it now to set new variables
-                __builtin__.__dict__['SRCDIR'] = sys.path[0]
-                __builtin__.__dict__['PKGDATADIR'] = None
-                __builtin__.__dict__['DATADIR'] = None
-            else:
-                raise FatalError(
-                    _('Obsolete JHBuild start script, make sure it is removed '
-                      'then do run \'make install\''))
 
         env_prepends.clear()
         try:
@@ -224,12 +144,41 @@ class Config:
         else:
             self._config['__file__'] = new_config
             self.filename = new_config
+
+        # we might need to redo this process on config reloads, so save these
+        self.saved_conditions_modifiers = conditions_modifiers
+
+        # We handle the conditions flags like so:
+        #   - get the default set of conditions (determined by the OS)
+        #   - modify it with the commandline arguments
+        #   - load the config file so that it can make further modifications
+        #   - modify it with the commandline arguments again
+        #
+        # We apply the commandline argument condition modifiers both before
+        # and after parsing the configuration so that the jhbuildrc has a
+        # chance to inspect the modified set of flags (and conditionally act
+        # on it to set new autogenargs, for example) but also so that the
+        # condition flags given on the commandline will ultimately override
+        # those in jhbuildrc.
+        self._config['conditions'] = sysid.get_default_conditions()
+        modify_conditions(self._config['conditions'], conditions_modifiers)
         self.load(filename)
-        self.setup_env()
+        modify_conditions(self.conditions, conditions_modifiers)
+
+        self.create_directories()
+
+        setup_env_defaults(self.system_libdirs)
+
+        for prefix in reversed(self.extra_prefixes):
+            setup_env(prefix)
+        setup_env(self.prefix)
+
+        self.apply_env_prepends()
+        self.update_build_targets()
 
     def reload(self):
         os.environ = self._orig_environ.copy()
-        self.__init__(filename=self._config.get('__file__'))
+        self.__init__(filename=self._config.get('__file__'), conditions_modifiers=self.saved_conditions_modifiers)
         self.set_from_cmdline_options(options=None)
 
     def include(self, filename):
@@ -349,9 +298,7 @@ class Config:
     def get_original_environment(self):
         return self._orig_environ
 
-    def setup_env(self):
-        '''set environment variables for using prefix'''
-
+    def create_directories(self):
         if not os.path.exists(self.prefix):
             try:
                 os.makedirs(self.prefix)
@@ -365,237 +312,17 @@ class Config:
                 raise FatalError(
                         _('working directory (%s) can not be created') % self.top_builddir)
 
-        os.environ['JHBUILD_PREFIX'] = self.prefix
+        if os.path.exists(os.path.join(self.prefix, 'lib64', 'libglib-2.0.so')):
+            raise FatalError(_("Your install prefix contains a 'lib64' directory, which is no longer "
+                               "supported by jhbuild.  This is likely the result of a previous build with an "
+                               "older version of jhbuild or of a broken package.  Please consider removing "
+                               "your install and checkout directories and starting fresh."))
 
-        os.environ['UNMANGLED_LD_LIBRARY_PATH'] = os.environ.get('LD_LIBRARY_PATH', '')
-
-        if not os.environ.get('DBUS_SYSTEM_BUS_ADDRESS'):
-            # Use the distribution's D-Bus for the system bus. JHBuild's D-Bus
-            # will # be used for the session bus
-            os.environ['DBUS_SYSTEM_BUS_ADDRESS'] = 'unix:path=/var/run/dbus/system_bus_socket'
-
-        # LD_LIBRARY_PATH
-        if self.use_lib64:
-            libdir = os.path.join(self.prefix, 'lib64')
-        else:
-            libdir = os.path.join(self.prefix, 'lib')
-        self.libdir = libdir
-        addpath('LD_LIBRARY_PATH', libdir)
-        os.environ['JHBUILD_LIBDIR'] = libdir
-
-        # LDFLAGS and C_INCLUDE_PATH are required for autoconf configure
-        # scripts to find modules that do not use pkg-config (such as guile
-        # looking for gmp, or wireless-tools for NetworkManager)
-        # (see bug #377724 and bug #545018)
-
-        # This path doesn't always get passed to addpath so we fix it here
-        if sys.platform.startswith('win'):
-            libdir = jhbuild.utils.subprocess_win32.fix_path_for_msys(libdir)
-        os.environ['LDFLAGS'] = ('-L%s ' % libdir) + os.environ.get('LDFLAGS', '')
-
-        includedir = os.path.join(self.prefix, 'include')
-        addpath('C_INCLUDE_PATH', includedir)
-        addpath('CPLUS_INCLUDE_PATH', includedir)
-
-        # On Mac OS X, we use DYLD_FALLBACK_LIBRARY_PATH
-        addpath('DYLD_FALLBACK_LIBRARY_PATH', libdir)
-
-        # PATH
-        bindir = os.path.join(self.prefix, 'bin')
-        addpath('PATH', bindir)
-
-        # MANPATH
-        manpathdir = os.path.join(self.prefix, 'share', 'man')
-        addpath('MANPATH', '')
-        addpath('MANPATH', manpathdir)
-
-        # INFOPATH
-        infopathdir = os.path.join(self.prefix, 'share', 'info')
-        addpath('INFOPATH', infopathdir)
-
-        # PKG_CONFIG_PATH
-        if os.environ.get('PKG_CONFIG_PATH') is None and self.partial_build:
-            for dirname in ('share', 'lib', 'lib64'):
-                full_name = '/usr/%s/pkgconfig' % dirname
-                if os.path.exists(full_name):
-                    addpath('PKG_CONFIG_PATH', full_name)
-        pkgconfigdatadir = os.path.join(self.prefix, 'share', 'pkgconfig')
-        pkgconfigdir = os.path.join(libdir, 'pkgconfig')
-        addpath('PKG_CONFIG_PATH', pkgconfigdatadir)
-        addpath('PKG_CONFIG_PATH', pkgconfigdir)
-
-        # GI_TYPELIB_PATH
-        if not 'GI_TYPELIB_PATH' in os.environ:
-            if self.use_lib64:
-                full_name = '/usr/lib64/girepository-1.0'
-            else:
-                full_name = '/usr/lib/girepository-1.0'
-            if os.path.exists(full_name):
-                addpath('GI_TYPELIB_PATH', full_name)
-        typelibpath = os.path.join(self.libdir, 'girepository-1.0')
-        addpath('GI_TYPELIB_PATH', typelibpath)
-
-        # XDG_DATA_DIRS
-        if self.partial_build:
-            addpath('XDG_DATA_DIRS', '/usr/share')
-        xdgdatadir = os.path.join(self.prefix, 'share')
-        addpath('XDG_DATA_DIRS', xdgdatadir)
-
-        # XDG_CONFIG_DIRS
-        if self.partial_build:
-            addpath('XDG_CONFIG_DIRS', '/etc')
-        xdgconfigdir = os.path.join(self.prefix, 'etc', 'xdg')
-        addpath('XDG_CONFIG_DIRS', xdgconfigdir)
-
-        # XCURSOR_PATH
-        xcursordir = os.path.join(self.prefix, 'share', 'icons')
-        addpath('XCURSOR_PATH', xcursordir)
-
-        # GST_PLUGIN_PATH
-        gstplugindir = os.path.join(self.libdir , 'gstreamer-0.10')
-        if os.path.exists(gstplugindir):
-            addpath('GST_PLUGIN_PATH', gstplugindir)
-
-        # GST_PLUGIN_PATH_1_0
-        gstplugindir = os.path.join(self.libdir , 'gstreamer-1.0')
-        if os.path.exists(gstplugindir):
-            addpath('GST_PLUGIN_PATH_1_0', gstplugindir)
-
-        # GST_REGISTRY
-        gstregistry = os.path.join(self.prefix, '_jhbuild', 'gstreamer-0.10.registry')
-        addpath('GST_REGISTRY', gstregistry)
-
-        # GST_REGISTRY_1_0
-        gstregistry = os.path.join(self.prefix, '_jhbuild', 'gstreamer-1.0.registry')
-        addpath('GST_REGISTRY_1_0', gstregistry)
-
-        # ACLOCAL_PATH
-        aclocalpath = os.path.join(self.prefix, 'share', 'aclocal')
-        addpath('ACLOCAL_PATH', aclocalpath)
-
-        # ACLOCAL_FLAGS
-        aclocaldir = os.path.join(self.prefix, 'share', 'aclocal')
-        if not os.path.exists(aclocaldir):
-            try:
-                os.makedirs(aclocaldir)
-            except:
-                raise FatalError(_("Can't create %s directory") % aclocaldir)
-        if self.partial_build:
-            if os.path.exists('/usr/share/aclocal'):
-                addpath('ACLOCAL_FLAGS', '/usr/share/aclocal')
-                if os.path.exists('/usr/local/share/aclocal'):
-                    addpath('ACLOCAL_FLAGS', '/usr/local/share/aclocal')
-        addpath('ACLOCAL_FLAGS', aclocaldir)
-
-        # PERL5LIB
-        perl5lib = os.path.join(self.prefix, 'lib', 'perl5')
-        addpath('PERL5LIB', perl5lib)
-
-        # These two variables are so that people who use "jhbuild shell"
-        # can tweak their shell prompts and such to show "I'm under jhbuild".
-        # The first variable is the obvious one to look for; the second
-        # one is for historical reasons. 
-        os.environ['UNDER_JHBUILD'] = 'true'
-        os.environ['CERTIFIED_GNOMIE'] = 'yes'
-
-        # PYTHONPATH
-        # Python inside jhbuild may be different than Python executing jhbuild,
-        # so it is executed to get its version number (fallback to local
-        # version number should never happen)
-        python_bin = os.environ.get('PYTHON', 'python')
-        try:
-            pythonversion = 'python' + get_output([python_bin, '-c',
-                'import sys; print(".".join([str(x) for x in sys.version_info[:2]]))'],
-                get_stderr = False).strip()
-        except CommandError:
-            pythonversion = 'python' + str(sys.version_info[0]) + '.' + str(sys.version_info[1])
-            if 'PYTHON' in os.environ:
-                logging.warn(_('Unable to determine python version using the '
-                               'PYTHON environment variable (%s). Using default "%s"')
-                             % (os.environ['PYTHON'], pythonversion))
-
-        # In Python 2.6, site-packages got replaced by dist-packages, get the
-        # actual value by asking distutils
-        # <http://bugzilla.gnome.org/show_bug.cgi?id=575426>
-        try:
-            python_packages_dir = get_output([python_bin, '-c',
-                'import os, distutils.sysconfig; '\
-                'print(distutils.sysconfig.get_python_lib(prefix="%s").split(os.path.sep)[-1])' % self.prefix],
-                get_stderr=False).strip()
-        except CommandError:
-            python_packages_dir = 'site-packages'
-            if 'PYTHON' in os.environ:
-                logging.warn(_('Unable to determine python site-packages directory using the '
-                               'PYTHON environment variable (%s). Using default "%s"')
-                             % (os.environ['PYTHON'], python_packages_dir))
-            
-        if self.use_lib64:
-            pythonpath = os.path.join(self.prefix, 'lib64', pythonversion, python_packages_dir)
-            addpath('PYTHONPATH', pythonpath)
-            if not os.path.exists(pythonpath):
-                os.makedirs(pythonpath)
-
-        pythonpath = os.path.join(self.prefix, 'lib', pythonversion, python_packages_dir)
-        addpath('PYTHONPATH', pythonpath)
-        if not os.path.exists(pythonpath):
-            os.makedirs(pythonpath)
-
-        # if there is a Python installed in JHBuild prefix, set it in PYTHON
-        # environment variable, so it gets picked up by configure scripts
-        # <http://bugzilla.gnome.org/show_bug.cgi?id=560872>
-        if os.path.exists(os.path.join(self.prefix, 'bin', 'python')):
-            os.environ['PYTHON'] = os.path.join(self.prefix, 'bin', 'python')
-
-        # Mono Prefixes
-        os.environ['MONO_PREFIX'] = self.prefix
-        os.environ['MONO_GAC_PREFIX'] = self.prefix
-
-        # GConf:
-        # Create a GConf source path file that tells GConf to use the data in
-        # the jhbuild prefix (in addition to the data in the system prefix),
-        # and point to it with GCONF_DEFAULT_SOURCE_PATH so modules will be read
-        # the right data (assuming a new enough libgconf).
-        gconfdir = os.path.join(self.prefix, 'etc', 'gconf')
-        gconfpathdir = os.path.join(gconfdir, '2')
-        if not os.path.exists(gconfpathdir):
-            os.makedirs(gconfpathdir)
-        gconfpath = os.path.join(gconfpathdir, 'path.jhbuild')
-        if not os.path.exists(gconfpath) and os.path.exists('/etc/gconf/2/path'):
-            try:
-                inp = open('/etc/gconf/2/path')
-                out = open(gconfpath, 'w')
-                for line in inp.readlines():
-                    if '/etc/gconf' in line:
-                        out.write(line.replace('/etc/gconf', gconfdir))
-                    out.write(line)
-                out.close()
-                inp.close()
-            except:
-                traceback.print_exc()
-                raise FatalError(_('Could not create GConf config (%s)') % gconfpath)
-        os.environ['GCONF_DEFAULT_SOURCE_PATH'] = gconfpath
-
-        # Set GCONF_SCHEMA_INSTALL_SOURCE to point into the jhbuild prefix so
-        # modules will install their schemas there (rather than failing to
-        # install them into /etc).
-        os.environ['GCONF_SCHEMA_INSTALL_SOURCE'] = 'xml:merged:' + os.path.join(
-                gconfdir, 'gconf.xml.defaults')
-
-        # handle environment prepends ...
+    def apply_env_prepends(self):
+        ''' handle environment prepends ... '''
         for envvar in env_prepends.keys():
             for path in env_prepends[envvar]:
                 addpath(envvar, path)
-
-
-        # get rid of gdkxft from the env -- it will cause problems.
-        if os.environ.has_key('LD_PRELOAD'):
-            valarr = os.environ['LD_PRELOAD'].split(' ')
-            for x in valarr[:]:
-                if x.find('libgdkxft.so') >= 0:
-                    valarr.remove(x)
-            os.environ['LD_PRELOAD'] = ' '.join(valarr)
-
-        self.update_build_targets()
 
     def update_build_targets(self):
         # update build targets according to old flags

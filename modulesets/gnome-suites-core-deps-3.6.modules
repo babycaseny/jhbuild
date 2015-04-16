@@ -17,8 +17,6 @@
     password=""/>
 <repository type="git" name="github.com"
     href="git://github.com/"/>
-<repository type="git" name="gusb.gitorious.org"
-    href="git://gitorious.org/gusb"/>
 <repository type="bzr" name="research.operationaldynamics.com"
     href="http://research.operationaldynamics.com/bzr"/>
 <repository type="git" name="linuxwacom.git.sourceforge.net"
@@ -194,7 +192,7 @@
   </autotools>
 
   <autotools id="gdk-pixbuf">
-    <branch/>
+    <branch revision="gdk-pixbuf-2-26"/>
     <dependencies>
       <dep package="glib"/>
       <dep package="gobject-introspection"/>
@@ -787,7 +785,7 @@
   </autotools>
 
   <autotools id="librsvg" supports-non-srcdir-builds="no" autogenargs="--disable-gtk-theme">
-    <branch/>
+    <branch revision="gnome-3-6"/>
     <dependencies>
       <dep package="libxml2"/>
       <dep package="glib"/>
@@ -1001,8 +999,8 @@
   </autotools>
 
   <autotools id="vala" autogenargs="--enable-vapigen">
-    <pkg-config>libvala-0.16.pc</pkg-config>
-    <branch/>
+    <pkg-config>libvala-0.18.pc</pkg-config>
+    <branch revision="0.18"/>
     <dependencies>
       <dep package="glib"/>
     </dependencies>
@@ -1107,7 +1105,7 @@
   <!-- OS Core Services dependencies -->
 
   <autotools id="libgusb">
-    <branch repo="gusb.gitorious.org" checkoutdir="libgusb" module="gusb.git"/>
+    <branch repo="github.com" checkoutdir="libgusb" module="hughsie/libgusb.git"/>
     <dependencies>
       <dep package="glib"/>
     </dependencies>
