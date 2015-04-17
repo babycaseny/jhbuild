@@ -13,20 +13,20 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=jhbuild&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-01-06 19:51+0000\n"
-"PO-Revision-Date: 2015-01-19 18:40+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"PO-Revision-Date: 2015-04-18 02:42+0800\n"
+"Last-Translator: Tom K. C. Chiu <tomchiukc@gmail.com>\n"
 "Language-Team: Babyish <babycaseny@gmail.com>\n"
-"Language: \n"
+"Language: bb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../autogen.sh:103
 #, sh-format
 msgid "Configuring $PKG_NAME without autotools"
-msgstr "Configurando $PKG_NAME sin autotools"
+msgstr "Konfigyuring $PKG_NAME without autotools"
 
 #: ../autogen.sh:120 ../autogen.sh:125
 #, sh-format
@@ -54,7 +54,7 @@ msgid ""
 "**Error**: Directory `$srcdir' does not look like the top-level $PKG_NAME "
 "directory"
 msgstr ""
-"**Error**: la carpeta «$srcdir» no es la carpeta de nivel superior de "
+"**Öra**: la carpeta «$srcdir» no es la carpeta de nivel superior de "
 "$PKG_NAME"
 
 #: ../autogen.sh:230
@@ -112,7 +112,7 @@ msgstr "URL de comentarios de jhautobuild"
 
 #: ../jhbuild/commands/autobuild.py:54
 msgid "verbose mode"
-msgstr "modo detallado"
+msgstr "wörd-bai-wörd moud"
 
 #: ../jhbuild/commands/autobuild.py:71
 msgid "report URL for autobuild not specified"
@@ -134,7 +134,7 @@ msgstr "Actualizar todos los módulos desde el sistema de control de versiones"
 #: ../jhbuild/commands/base.py:277 ../jhbuild/commands/base.py:428
 #: ../jhbuild/commands/tinderbox.py:32
 msgid "[ options ... ] [ modules ... ]"
-msgstr "[ opciones … ] [ módulos … ]"
+msgstr "[ opçions … ] [ mojuls … ]"
 
 #: ../jhbuild/commands/base.py:50
 msgid "start updating at the given module"
@@ -342,7 +342,7 @@ msgstr ""
 #: ../jhbuild/commands/base.py:494 ../jhbuild/commands/base.py:527
 #: ../jhbuild/commands/info.py:39 ../jhbuild/commands/uninstall.py:34
 msgid "[ modules ... ]"
-msgstr "[ módulos … ]"
+msgstr "[ mojuls … ]"
 
 #: ../jhbuild/commands/base.py:500
 msgid "add dotted lines to soft dependencies"
@@ -368,7 +368,7 @@ msgstr "Controlar buildbot"
 #: ../jhbuild/commands/bot.py:57 ../jhbuild/commands/__init__.py:45
 #: ../jhbuild/commands/make.py:36
 msgid "[ options ... ]"
-msgstr "[ opciones … ]"
+msgstr "[ opçions … ]"
 
 #: ../jhbuild/commands/bot.py:63
 msgid "setup a buildbot environment"
@@ -400,11 +400,11 @@ msgstr "iniciar como demonio"
 
 #: ../jhbuild/commands/bot.py:84
 msgid "PID file location"
-msgstr "Ubicacion del archivo PID"
+msgstr "PID fayl loukeiçion"
 
 #: ../jhbuild/commands/bot.py:87
 msgid "log file location"
-msgstr "ubicación del archivo de registro"
+msgstr "log-fayl loukeiçion"
 
 #: ../jhbuild/commands/bot.py:90
 msgid "directory with slave files (only with --start-server)"
@@ -430,7 +430,7 @@ msgstr ""
 #: ../jhbuild/commands/bot.py:292
 #, python-format
 msgid "No description for slave %s."
-msgstr "No hay descripción para el esclavo %s."
+msgstr "Mwu diskraipçion für noudài %s."
 
 #. parse error
 #: ../jhbuild/commands/bot.py:297
@@ -517,31 +517,31 @@ msgstr "módulo %s desconocido"
 
 #: ../jhbuild/commands/info.py:60
 msgid "Name:"
-msgstr "Nombre:"
+msgstr "Neim:"
 
 #: ../jhbuild/commands/info.py:61
 msgid "Module Set:"
-msgstr "Conjunto de módulos:"
+msgstr "Mojul-Set:"
 
 #: ../jhbuild/commands/info.py:62
 msgid "Type:"
-msgstr "Tipo:"
+msgstr "Taip:"
 
 #: ../jhbuild/commands/info.py:65 ../jhbuild/commands/info.py:69
 msgid "Install version:"
-msgstr "Versión instalada:"
+msgstr "Instol vörçion:"
 
 #: ../jhbuild/commands/info.py:66 ../jhbuild/commands/info.py:70
 msgid "Install date:"
-msgstr "Fecha de instalación:"
+msgstr "Instol deit:"
 
 #: ../jhbuild/commands/info.py:69 ../jhbuild/commands/info.py:70
 msgid "not installed"
-msgstr "no instalado"
+msgstr "mi-instol"
 
 #: ../jhbuild/commands/info.py:75
 msgid "CVS Root:"
-msgstr "Raíz de CVS:"
+msgstr "CVS dè rut: "
 
 #: ../jhbuild/commands/info.py:76
 msgid "CVS Module:"
@@ -644,7 +644,7 @@ msgstr "  Paquetes del sistema instalados demasiado antiguos:"
 #: ../jhbuild/commands/sysdeps.py:143 ../jhbuild/commands/sysdeps.py:159
 #: ../jhbuild/commands/sysdeps.py:174 ../jhbuild/commands/sysdeps.py:187
 msgid "    (none)"
-msgstr "    (ninguno)"
+msgstr "    (mwu)"
 
 #: ../jhbuild/commands/__init__.py:107 ../jhbuild/commands/sysdeps.py:145
 #: ../jhbuild/commands/sysdeps.py:176
@@ -827,7 +827,7 @@ msgstr "Paquetes del sistema instalados suficientemente nuevos:"
 
 #: ../jhbuild/commands/sysdeps.py:131
 msgid "  (none)"
-msgstr "  (ninguno)"
+msgstr "  (mwu)"
 
 #: ../jhbuild/commands/sysdeps.py:164
 msgid "Optional packages: (JHBuild will build the missing packages)"
@@ -1208,7 +1208,7 @@ msgstr ""
 #: ../jhbuild/frontends/terminal.py:259 ../jhbuild/frontends/terminal.py:263
 #, python-format
 msgid "########## Error running %s"
-msgstr "########## Error de ejecución %s"
+msgstr "########## Öra rùning %s"
 
 #: ../jhbuild/frontends/terminal.py:277
 msgid "success"
@@ -2016,227 +2016,3 @@ msgstr "no se pudo subir el conjunto de parches"
 #~ msgstr ""
 #~ "No se ha encontrado el repositorio predeterminado=%(missing)s para el id "
 #~ "de módulo=%(module)s. Los repositorios son posibles %(possible)s"
-
-#~| msgid "    %(pkg)s (required=%(req)s, installed=%(installed)s)"
-#~ msgid ""
-#~ "    %(module)s (%(pkg_config)srequired=%(req)s, installed=%(installed)s)"
-#~ msgstr ""
-#~ "    %(module)s (%(pkg_config)requerido=%(req)s, instalado=%(installed)s)"
-
-#~| msgid "    %(pkg)s (required=%(req)s)"
-#~ msgid "    %(module)s (%(pkg_config)srequired=%(req)s)"
-#~ msgstr "    %(module)s (%(pkg_config)requerido=%(req)s)"
-
-#~ msgid "unknown"
-#~ msgstr "desconocido"
-
-#~ msgid "This option does nothing anymore"
-#~ msgstr "Esta opción ya no hace nada"
-
-#~ msgid "module \"%s\" not found"
-#~ msgstr "no se encontró el módulo «%s»"
-
-#~ msgid ""
-#~ "Partial build is not enabled; add partial_build = True to ~/.jhbuildrc"
-#~ msgstr ""
-#~ "La construcción parcial no está activada; añada  partial_build = True a "
-#~ "~/.jhbuildrc"
-
-#~ msgid ""
-#~ "bootstrap moduleset has been updated since the last time you used it, "
-#~ "perhaps you should run jhbuild bootstrap."
-#~ msgstr ""
-#~ "el conjunto de módulos de bootstrap se ha actualizado desde la última vez "
-#~ "que lo utilizó. Tal vez debería ejecutar jhbuild bootstrap."
-
-#~ msgid ""
-#~ "some bootstrap modules have been updated, perhaps you should update them: "
-#~ "%s."
-#~ msgstr ""
-#~ "algunos módulos de bootstrap se han actualizado, quizá debería "
-#~ "actualizarlos: %s."
-
-#~ msgid "do not use system installed modules"
-#~ msgstr "no usar los módulos del sistema instalados"
-
-#~ msgid ""
-#~ "some modules (%s) were automatically ignored as a sufficient enough "
-#~ "version was found installed on your system. Use --ignore-system if you "
-#~ "want to build them nevertheless."
-#~ msgstr ""
-#~ "se han ignorado automáticamente algunos módulos (%s) ya que se han "
-#~ "encontrado las versiones necesarias instaladas en su sistema. Use --"
-#~ "ignore-system si quiere construirlos de todas formas."
-
-#~ msgid "gnome-doc-prepare not available"
-#~ msgstr "gnome-doc-prepare no está disponible"
-
-#~ msgid "Arch Version:"
-#~ msgstr "Version de Arch:"
-
-#~ msgid "could not register archive %s"
-#~ msgstr "no se pudo registrar el archivo %s"
-
-#~ msgid "archive %s not registered"
-#~ msgstr "no se registró el archivo %s"
-
-#~ msgid "date based checkout not yet supported"
-#~ msgstr "aún no se soporta la comprobación basada en fechas"
-
-#~ msgid "command not found"
-#~ msgstr "comando no encontrado"
-
-#~ msgid "Uninstalling"
-#~ msgstr "Desinstalando"
-
-#~ msgid "Missing ant build tool"
-#~ msgstr "No se encuentra la herramienta de construcción ant"
-
-#~ msgid "could not create directory %s"
-#~ msgstr "no se pudo crear la carpeta %s"
-
-#~| msgid "Git-Module:"
-#~ msgid "Git-Mirror-Module:"
-#~ msgstr "Módulo-espejo-en-Git:"
-
-#~ msgid "unable to parse '%s' as relative time."
-#~ msgstr "no se puede analizar «%s» en tiempo relativo."
-
-#~ msgid "Failed to update module (corrupt .git?)"
-#~ msgstr "Falló al actualizar el módulo (¿.git corrupto?)"
-
-#~ msgid "Missing waf, try jhbuild -m bootstrap buildone waf"
-#~ msgstr "Falta Waf, pruebe a ejecutar jhbuild -m bootstrap buildone waf"
-
-#~ msgid "uninstall modules passed on command line only"
-#~ msgstr "desinstalar únicamente los módulos pasados por línea de comandos"
-
-#~ msgid "Go to stage %s"
-#~ msgstr "Ir al paso %s"
-
-#~ msgid "no such option: %s"
-#~ msgstr "no existe la opción %s"
-
-#~ msgid "ambiguous option: %s (%s?)"
-#~ msgstr "opción ambigua: %s (%s?)"
-
-#~ msgid "Usage: %s\n"
-#~ msgstr "Uso: %s\n"
-
-#~ msgid "Usage"
-#~ msgstr "Uso"
-
-#~ msgid "integer"
-#~ msgstr "entero"
-
-#~ msgid "long integer"
-#~ msgstr "entero largo"
-
-#~ msgid "floating-point"
-#~ msgstr "coma flotante"
-
-#~ msgid "complex"
-#~ msgstr "complejo"
-
-#~ msgid "option %s: invalid %s value: %r"
-#~ msgstr "opción %s: valor %s no válido: %r"
-
-#~ msgid "option %s: invalid choice: %r (choose from %s)"
-#~ msgstr "opción %s: selección no válida: %r (seleccione de %s)"
-
-#~ msgid "show program's version number and exit"
-#~ msgstr "mostrar el número de versión del programa y salir"
-
-#~ msgid "%prog [options]"
-#~ msgstr "%prog [opciones]"
-
-#~ msgid "%s option requires an argument"
-#~ msgstr "la opción %s requiere un argumento"
-
-#~ msgid "%s option requires %d arguments"
-#~ msgstr "la opción %s requiere %d argumentos"
-
-#~ msgid "Options"
-#~ msgstr "Opciones"
-
-#~ msgid "Found meta module %s"
-#~ msgstr "Se encontró el meta módulo %s"
-
-#~ msgid "Build"
-#~ msgstr "Construir"
-
-#~ msgid "Module Group"
-#~ msgstr "Grupo de módulos"
-
-#~ msgid "%d of %d modules"
-#~ msgstr "%d de %d módulos"
-
-#~ msgid "[%(num)d/%(total)d] %(action)s %(module)s"
-#~ msgstr "[%(num)d/%(total)d] %(action)s %(module)s"
-
-#~ msgid ""
-#~ "the following modules were not built:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "los siguientes módulos no se han construido:\n"
-#~ "%s"
-
-#~ msgid "Error during %(phase)s for module %(module)s"
-#~ msgstr "Error durante %(phase)s de los módulos %(module)s"
-
-#~ msgid "_Try %s Again"
-#~ msgstr "_Pruebe %s de nuevo"
-
-#~ msgid "_Ignore Error"
-#~ msgstr "_Ignorar error"
-
-#~ msgid "_Skip Module"
-#~ msgstr "_Omitir módulo"
-
-#~ msgid "Build Output"
-#~ msgstr "Salida de la construcción"
-
-#~ msgid "Configure Build"
-#~ msgstr "Configurar construcción"
-
-#~ msgid "Do not build"
-#~ msgstr "No construir"
-
-#~ msgid "Start _Build"
-#~ msgstr "Iniciar _construcción"
-
-#~ msgid "Update from CVS"
-#~ msgstr "Actualizar desde CVS"
-
-#~ msgid "_Pause Build"
-#~ msgstr "_Pausar construcción"
-
-#~ msgid "Moz-Projects:"
-#~ msgstr "Proyecto-Moz:"
-
-#~ msgid "Failed to clean %s"
-#~ msgstr "Falló al limpiar %s"
-
-#~ msgid "could not determine mozilla version"
-#~ msgstr "no se ha podido determinar la versión de mozilla"
-
-#~ msgid "Updating"
-#~ msgstr "Actualizando"
-
-#~ msgid "force_checkout not implemented"
-#~ msgstr "force_checkout no implementado"
-
-#~ msgid "aclocal-%s can't see gettext macros"
-#~ msgstr "aclocal-%s no puede ver las macros de gettext"
-
-#~ msgid "aclocal-%s can't see pkg-config macros"
-#~ msgstr "aclocal-%s no puede ver las macros de pkg-config"
-
-#~ msgid "No <kconfig> elements found for module %s"
-#~ msgstr "No se encontraron los elementos de <kconfig> para el módulo %s"
-
-#~ msgid "dependent module \"%s\" not found"
-#~ msgstr "no se encontró el módulo dependiente «%s»"
-
-#~ msgid "Missing darcs command"
-#~ msgstr "Comando darcs no encontrado"

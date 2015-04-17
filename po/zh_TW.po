@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=jhbuild&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-02-28 21:29+0000\n"
-"PO-Revision-Date: 2015-03-19 02:46+0800\n"
+"PO-Revision-Date: 2015-04-18 02:35+0800\n"
 "Last-Translator: Tom K. C. Chiu <tomchiukc@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <i18n-zh@googlegroups.com>\n"
 "Language: zh_TW\n"
@@ -51,7 +51,7 @@ msgstr "現在輸入“make”來編譯 $PKG_NAME"
 msgid ""
 "**Error**: Directory `$srcdir' does not look like the top-level $PKG_NAME "
 "directory"
-msgstr "**错误**：“$srcdir”似乎不是顶级的 $PKG_NAME 目录"
+msgstr "**錯誤**：“$srcdir”似乎不是頂級的 $PKG_NAME 資料夾"
 
 #: ../autogen.sh:230
 msgid ""
@@ -66,19 +66,19 @@ msgstr "警告：yelp-tools 不可用(通常在“yelp-tools”这个包里)"
 
 #: ../jhbuild/commands/autobuild.py:28
 msgid "Build modules non-interactively and upload results to JhAutobuild"
-msgstr "以非交互方式构建模块并将结果上传到 JhAutobuild"
+msgstr "以非交互方式构建模組并将结果上传到 JhAutobuild"
 
 #: ../jhbuild/commands/autobuild.py:36 ../jhbuild/commands/base.py:172
 #: ../jhbuild/commands/base.py:283 ../jhbuild/commands/make.py:42
 #: ../jhbuild/commands/tinderbox.py:38
 msgid "always run autogen.sh"
-msgstr "总是运行 autogen.sh"
+msgstr "總是執行 autogen.sh"
 
 #: ../jhbuild/commands/autobuild.py:39 ../jhbuild/commands/base.py:178
 #: ../jhbuild/commands/base.py:286 ../jhbuild/commands/make.py:45
 #: ../jhbuild/commands/tinderbox.py:44
 msgid "run make clean before make"
-msgstr "在运行 make 前运行 make clean"
+msgstr "執行 make 前執行 make clean"
 
 #: ../jhbuild/commands/autobuild.py:42 ../jhbuild/commands/base.py:187
 #: ../jhbuild/commands/base.py:298
@@ -89,12 +89,12 @@ msgstr "在构建后运行 make distcheck"
 #: ../jhbuild/commands/base.py:199 ../jhbuild/commands/base.py:437
 #: ../jhbuild/commands/clean.py:38 ../jhbuild/commands/tinderbox.py:53
 msgid "treat the given modules as up to date"
-msgstr "将给定模块视为最新"
+msgstr "将给定模組视为最新"
 
 #: ../jhbuild/commands/autobuild.py:48 ../jhbuild/commands/base.py:202
 #: ../jhbuild/commands/clean.py:41 ../jhbuild/commands/tinderbox.py:56
 msgid "start building at the given module"
-msgstr "从给定模块开始构建"
+msgstr "从给定模組开始构建"
 
 #: ../jhbuild/commands/autobuild.py:51
 msgid "jhautobuild report URL"
@@ -102,7 +102,7 @@ msgstr "jhbuild 報告 URL"
 
 #: ../jhbuild/commands/autobuild.py:54
 msgid "verbose mode"
-msgstr "详细模式"
+msgstr "詳細模式"
 
 #: ../jhbuild/commands/autobuild.py:71
 msgid "report URL for autobuild not specified"
@@ -113,32 +113,32 @@ msgstr "没有指定 autobuild 的报告 URL"
 #: ../jhbuild/commands/clean.py:55 ../jhbuild/commands/tinderbox.py:94
 #, python-format
 msgid "%s not in module list"
-msgstr "%s 不在模块列表中"
+msgstr "%s 不在模組列表中"
 
 #: ../jhbuild/commands/base.py:38
 msgid "Update all modules from version control"
-msgstr "通过版本控制更新所有模块"
+msgstr "通过版本控制更新所有模組"
 
 #: ../jhbuild/commands/base.py:41 ../jhbuild/commands/base.py:89
 #: ../jhbuild/commands/base.py:123 ../jhbuild/commands/base.py:166
 #: ../jhbuild/commands/base.py:277 ../jhbuild/commands/base.py:428
 #: ../jhbuild/commands/tinderbox.py:32
 msgid "[ options ... ] [ modules ... ]"
-msgstr "[ 选项 ... ] [ 模块 ... ]"
+msgstr "[ 选项 ... ] [ 模組 ... ]"
 
 #: ../jhbuild/commands/base.py:50
 msgid "start updating at the given module"
-msgstr "从给定模块开始更新"
+msgstr "从给定模組开始更新"
 
 #: ../jhbuild/commands/base.py:53
 msgid "update only modules with the given tags"
-msgstr "只更新带有给定标记的模块"
+msgstr "只更新带有给定标记的模組"
 
 #: ../jhbuild/commands/base.py:56 ../jhbuild/commands/base.py:95
 #: ../jhbuild/commands/base.py:208 ../jhbuild/commands/base.py:307
 #: ../jhbuild/commands/tinderbox.py:59
 msgid "set a sticky date when checking out modules"
-msgstr "在检出模块时设置一个粘性日期"
+msgstr "在检出模組时设置一个粘性日期"
 
 #: ../jhbuild/commands/base.py:59 ../jhbuild/commands/base.py:190
 #: ../jhbuild/commands/base.py:446
@@ -147,24 +147,24 @@ msgstr "忽略所有软依赖"
 
 #: ../jhbuild/commands/base.py:86
 msgid "Update one or more modules from version control"
-msgstr "通过版本控制更新一个或多个模块"
+msgstr "通过版本控制更新一个或多个模組"
 
 #: ../jhbuild/commands/base.py:104 ../jhbuild/commands/base.py:142
 #: ../jhbuild/commands/base.py:383 ../jhbuild/commands/rdepends.py:52
 #: ../jhbuild/moduleset.py:165
 #, python-format
 msgid "A module called '%s' could not be found."
-msgstr "一个名为 %s 的模块找不到。"
+msgstr "一个名为 %s 的模組找不到。"
 
 #: ../jhbuild/commands/base.py:107 ../jhbuild/commands/base.py:145
 #: ../jhbuild/commands/base.py:340 ../jhbuild/commands/rdepends.py:47
 #: ../jhbuild/commands/uninstall.py:58
 msgid "This command requires a module parameter."
-msgstr "此命令需要一个模块参数。"
+msgstr "此命令需要一个模組参数。"
 
 #: ../jhbuild/commands/base.py:120
 msgid "Clean one or more modules"
-msgstr "清理一个或多个模块"
+msgstr "清理一个或多个模組"
 
 #: ../jhbuild/commands/base.py:129
 msgid "honour the makeclean setting in config file"
@@ -181,7 +181,7 @@ msgstr "调用了 clean 命令，而 makeclean 设为关闭，已跳过。"
 
 #: ../jhbuild/commands/base.py:163
 msgid "Update and compile all modules (the default)"
-msgstr "更新并编译所有模块(默认)"
+msgstr "更新并编译所有模組(默认)"
 
 #: ../jhbuild/commands/base.py:181 ../jhbuild/commands/base.py:292
 #: ../jhbuild/commands/make.py:48
@@ -204,7 +204,7 @@ msgstr "安静(无输出)"
 
 #: ../jhbuild/commands/base.py:205 ../jhbuild/commands/base.py:443
 msgid "build only modules with the given tags"
-msgstr "只构建带给定标记的模块"
+msgstr "只构建带给定标记的模組"
 
 #: ../jhbuild/commands/base.py:211 ../jhbuild/commands/base.py:310
 msgid "run tests in real X and not in Xvfb"
@@ -216,7 +216,7 @@ msgstr "在失败时尝试强制进行检出和 autogen"
 
 #: ../jhbuild/commands/base.py:217 ../jhbuild/commands/tinderbox.py:65
 msgid "don't poison modules on failure"
-msgstr "在失败时不要污染模块"
+msgstr "在失败时不要污染模組"
 
 #: ../jhbuild/commands/base.py:220 ../jhbuild/commands/base.py:313
 #: ../jhbuild/commands/tinderbox.py:68
@@ -229,7 +229,7 @@ msgstr "同时构建无法跳过的软依赖"
 
 #: ../jhbuild/commands/base.py:226 ../jhbuild/commands/base.py:316
 msgid "skip modules installed less than the given time ago"
-msgstr "跳过给定时间之后安裝的模块"
+msgstr "跳过给定时间之后安裝的模組"
 
 #: ../jhbuild/commands/base.py:229 ../jhbuild/commands/tinderbox.py:71
 msgid "ignore missing system dependencies"
@@ -237,7 +237,7 @@ msgstr "忽略缺少的系统依赖"
 
 #: ../jhbuild/commands/base.py:253
 msgid "requested module is in the ignore list, nothing to do."
-msgstr "要求的模块在忽略列表中，无事可做。"
+msgstr "要求的模組在忽略列表中，无事可做。"
 
 #: ../jhbuild/commands/base.py:260 ../jhbuild/commands/tinderbox.py:100
 #, python-format
@@ -250,7 +250,7 @@ msgstr ""
 
 #: ../jhbuild/commands/base.py:274
 msgid "Update and compile one or more modules"
-msgstr "更新和编译一个或多个模块"
+msgstr "更新和编译一个或多个模組"
 
 #: ../jhbuild/commands/base.py:335 ../jhbuild/commands/make.py:95
 #: ../jhbuild/commands/uninstall.py:50
@@ -258,7 +258,7 @@ msgstr "更新和编译一个或多个模块"
 msgid ""
 "module \"%(modname)s\" does not exist, created automatically using "
 "repository \"%(reponame)s\""
-msgstr "“%(modname)s”模块不存在，已使用仓库“%(reponame)s”自动创建"
+msgstr "“%(modname)s”模組不存在，已使用仓库“%(reponame)s”自动创建"
 
 #: ../jhbuild/commands/base.py:348
 msgid "Run a command under the JHBuild environment"
@@ -270,11 +270,11 @@ msgstr "[ 选项 ... ] 程序名 [ 参数 ... ]"
 
 #: ../jhbuild/commands/base.py:357
 msgid "run command in build dir of the given module"
-msgstr "在给定模块的构建目录中运行命令"
+msgstr "在给定模組的构建目录中运行命令"
 
 #: ../jhbuild/commands/base.py:360
 msgid "run command in checkout dir of the given module"
-msgstr "在给定模块的检出目录中运行命令"
+msgstr "在给定模組的检出目录中运行命令"
 
 #: ../jhbuild/commands/base.py:373 ../jhbuild/commands/base.py:403
 #, python-format
@@ -297,7 +297,7 @@ msgstr "在 JHBuild 环境下启动一个 shell"
 
 #: ../jhbuild/commands/base.py:425
 msgid "List the modules that would be built"
-msgstr "列出将构建的模块"
+msgstr "列出将构建的模組"
 
 #: ../jhbuild/commands/base.py:434
 msgid "show which revision will be built"
@@ -305,7 +305,7 @@ msgstr "显示要构建的修订版本"
 
 #: ../jhbuild/commands/base.py:440
 msgid "start list at the given module"
-msgstr "从给定模块开始列表"
+msgstr "从给定模組开始列表"
 
 #: ../jhbuild/commands/base.py:449
 msgid "also list soft-dependencies that could be skipped"
@@ -313,7 +313,7 @@ msgstr "同时列出无法跳过的软依赖"
 
 #: ../jhbuild/commands/base.py:452
 msgid "list all modules, not only those that would be built"
-msgstr "列出所有模块，而不仅是要构建的模块"
+msgstr "列出所有模組，而不仅是要构建的模組"
 
 #: ../jhbuild/commands/base.py:459
 msgid "Conflicting options specified ('--start-at' and '--all-modules')"
@@ -321,12 +321,12 @@ msgstr "指定了冲突的选项('--start-at' 和 '--all-modules')"
 
 #: ../jhbuild/commands/base.py:491
 msgid "Output a Graphviz dependency graph for one or more modules"
-msgstr "输出一个或多个模块的一张 Graphviz 依赖图"
+msgstr "输出一个或多个模組的一张 Graphviz 依赖图"
 
 #: ../jhbuild/commands/base.py:494 ../jhbuild/commands/info.py:39
 #: ../jhbuild/commands/uninstall.py:34
 msgid "[ modules ... ]"
-msgstr "[ 模块 ... ]"
+msgstr "[ 模組 ... ]"
 
 #: ../jhbuild/commands/base.py:500
 msgid "add dotted lines to soft dependencies"
@@ -334,7 +334,7 @@ msgstr "向软依赖添加点线"
 
 #: ../jhbuild/commands/base.py:503
 msgid "group modules from metamodule together"
-msgstr "将 metamodule 中的模块归在一起"
+msgstr "将 metamodule 中的模組归在一起"
 
 #: ../jhbuild/commands/bootstrap.py:24
 msgid "Build support tools"
@@ -423,7 +423,7 @@ msgstr "获取 buildbot PID 失败"
 #: ../jhbuild/commands/checkbranches.py:28
 msgid ""
 "Check modules in GNOME Git repository have the correct branch definition"
-msgstr "检查 GNOME Git 仓库中的模块是否有正确的分支定义"
+msgstr "检查 GNOME Git 仓库中的模組是否有正确的分支定义"
 
 #: ../jhbuild/commands/checkbranches.py:65
 #, python-format
@@ -432,7 +432,7 @@ msgstr "%(module)s 缺少 %(branch)s 的分支定义"
 
 #: ../jhbuild/commands/checkmodulesets.py:30
 msgid "Check if modules in JHBuild have the correct definition"
-msgstr "检查 JHBuild 中的模块是否有正确的定义"
+msgstr "检查 JHBuild 中的模組是否有正确的定义"
 
 #: ../jhbuild/commands/checkmodulesets.py:43
 #, python-format
@@ -446,7 +446,7 @@ msgstr "无法检查 %(module)s (%(href)s)"
 
 #: ../jhbuild/commands/clean.py:29
 msgid "Clean all modules"
-msgstr "清理所有模块"
+msgstr "清理所有模組"
 
 #: ../jhbuild/commands/extdeps.py:70
 msgid "Report details on GNOME external dependencies"
@@ -472,7 +472,7 @@ msgstr "及其他 %d 个。"
 
 #: ../jhbuild/commands/goalreport.py:328
 msgid "Report GNOME modules status wrt various goals"
-msgstr "报告与各种目标无关的 GNOME 模块状态"
+msgstr "报告与各种目标无关的 GNOME 模組状态"
 
 #: ../jhbuild/commands/goalreport.py:351
 msgid "check to perform"
@@ -484,12 +484,12 @@ msgstr "通过 GUI 程序构建目标"
 
 #: ../jhbuild/commands/info.py:36
 msgid "Display information about one or more modules"
-msgstr "显示有关一个或多个模块的信息"
+msgstr "显示有关一个或多个模組的信息"
 
 #: ../jhbuild/commands/info.py:51
 #, python-format
 msgid "unknown module %s"
-msgstr "未知模块 %s"
+msgstr "未知模組 %s"
 
 #: ../jhbuild/commands/info.py:60
 msgid "Name:"
@@ -497,11 +497,11 @@ msgstr "名称："
 
 #: ../jhbuild/commands/info.py:61
 msgid "Module Set:"
-msgstr "模块集："
+msgstr "模組集："
 
 #: ../jhbuild/commands/info.py:62
 msgid "Type:"
-msgstr "类型："
+msgstr "類型："
 
 #: ../jhbuild/commands/info.py:65 ../jhbuild/commands/info.py:69
 msgid "Install version:"
@@ -521,7 +521,7 @@ msgstr "CVS 根："
 
 #: ../jhbuild/commands/info.py:76
 msgid "CVS Module:"
-msgstr "CVS 模块："
+msgstr "CVS 模組："
 
 #: ../jhbuild/commands/info.py:78
 msgid "CVS Revision:"
@@ -529,7 +529,7 @@ msgstr "CVS 版本："
 
 #: ../jhbuild/commands/info.py:80
 msgid "Subversion Module:"
-msgstr "Subversion 模块："
+msgstr "Subversion 模組："
 
 #: ../jhbuild/commands/info.py:82
 msgid "Darcs Archive:"
@@ -537,11 +537,11 @@ msgstr "Darcs 档案："
 
 #: ../jhbuild/commands/info.py:84
 msgid "Git Module:"
-msgstr "Git 模块："
+msgstr "Git 模組："
 
 #: ../jhbuild/commands/info.py:86
 msgid "Git Origin Module:"
-msgstr "Git 原始模块："
+msgstr "Git 原始模組："
 
 #: ../jhbuild/commands/info.py:90
 msgid "Git Branch:"
@@ -577,7 +577,7 @@ msgstr "需要者："
 
 #: ../jhbuild/commands/info.py:115
 msgid "Suggests:"
-msgstr "建议："
+msgstr "建議："
 
 #: ../jhbuild/commands/info.py:117
 msgid "After:"
@@ -651,7 +651,7 @@ msgstr "没有这样的命令(您指的是“jhbuild run %s”吗？)"
 
 #: ../jhbuild/commands/make.py:33
 msgid "Compile and install the module for the current directory"
-msgstr "针对当前目录编译和安裝该模块"
+msgstr "针对当前目录编译和安裝该模組"
 
 #: ../jhbuild/commands/make.py:78
 #, python-format
@@ -661,23 +661,23 @@ msgstr "当前目录不在检出根位置 %r 下"
 #: ../jhbuild/commands/make.py:90
 #, python-format
 msgid "No module matching current directory %r in the moduleset"
-msgstr "模块集中没有与当前目录 %r 匹配的模块"
+msgstr "模組集中没有与当前目录 %r 匹配的模組"
 
 #: ../jhbuild/commands/rdepends.py:28
 msgid "Display reverse-dependencies of a module"
-msgstr "显示模块的反向依赖"
+msgstr "显示模組的反向依赖"
 
 #: ../jhbuild/commands/rdepends.py:31
 msgid "[ module ]"
-msgstr "[ 模块 ]"
+msgstr "[ 模組 ]"
 
 #: ../jhbuild/commands/rdepends.py:37
 msgid "display dependency path next to modules"
-msgstr "在模块旁显示依赖路径"
+msgstr "在模組旁显示依赖路径"
 
 #: ../jhbuild/commands/rdepends.py:40
 msgid "limit display to modules directly depending on given module"
-msgstr "只显示直接依赖于给定模块的模块"
+msgstr "只显示直接依赖于给定模組的模組"
 
 #: ../jhbuild/commands/sanitycheck.py:46
 msgid "Check that required support tools are available"
@@ -734,7 +734,7 @@ msgid ""
 "Could not find the Perl module %s (usually part of package 'libxml-parser-"
 "perl' or 'perl-XML-Parser')"
 msgstr ""
-"找不到 Perl 模块 %s(通常是包“libxml-parser-perl”或“perl-XML-Parser”的一部分。"
+"找不到 Perl 模組 %s(通常是包“libxml-parser-perl”或“perl-XML-Parser”的一部分。"
 
 #: ../jhbuild/commands/sanitycheck.py:124
 #, python-format
@@ -769,7 +769,7 @@ msgstr "请从以下路径复制缺少的宏 (%(macros)s)：%(path)s"
 
 #: ../jhbuild/commands/snapshot.py:34
 msgid "Print out a moduleset for the exact versions that are checked out"
-msgstr "打印完全对应于所检出版本的模块集"
+msgstr "打印完全对应于所检出版本的模組集"
 
 #: ../jhbuild/commands/sysdeps.py:32
 msgid "Check and install tarball dependencies using system packages"
@@ -777,7 +777,7 @@ msgstr "使用系统包检查并安裝档案包依赖"
 
 #: ../jhbuild/commands/sysdeps.py:40
 msgid "Install pkg-config modules via system"
-msgstr "通过系统安裝 pkg-config 模块"
+msgstr "通过系统安裝 pkg-config 模組"
 
 #: ../jhbuild/commands/sysdeps.py:69
 msgid "System installed packages which are new enough:"
@@ -805,7 +805,7 @@ msgstr "不知道如何在此系统上安裝包"
 #: ../jhbuild/commands/sysdeps.py:165
 #, python-format
 msgid "No uninstalled system dependencies to install for modules: %r"
-msgstr "没有要为模块安裝的、已卸载的系统依赖：%r"
+msgstr "没有要为模組安裝的、已卸载的系统依赖：%r"
 
 #: ../jhbuild/commands/sysdeps.py:167
 #, python-format
@@ -814,7 +814,7 @@ msgstr "在系统上安裝依赖：%s"
 
 #: ../jhbuild/commands/tinderbox.py:29
 msgid "Build modules non-interactively and store build logs"
-msgstr "以非交互方式构建模块并保存构建日志"
+msgstr "以非交互方式构建模組并保存构建日志"
 
 #: ../jhbuild/commands/tinderbox.py:50
 msgid "directory to store build logs in"
@@ -826,21 +826,21 @@ msgstr "没有指定 tinderbox 构建的输出目录"
 
 #: ../jhbuild/commands/twoninetynine.py:161
 msgid "Report GNOME modules status wrt 3.0 goals"
-msgstr "报告与 3.0 目标无关的 GNOME 模块状态"
+msgstr "报告与 3.0 目标无关的 GNOME 模組状态"
 
 #: ../jhbuild/commands/uninstall.py:31
 msgid "Uninstall all modules"
-msgstr "卸载所有模块"
+msgstr "卸載所有模組"
 
 #: ../jhbuild/commands/uninstall.py:48
 #, python-format
 msgid "unknown module %s and no default repository to try an automatic module"
-msgstr "未知的模块 %s，并且没有可以尝试自动模块的默认仓库"
+msgstr "未知的模組 %s，而且沒有可以嘗試自動模組的預設倉庫"
 
 #: ../jhbuild/commands/uninstall.py:64
 #, python-format
 msgid "Module %(mod)r is not installed"
-msgstr "模块 %(mod)r 未安裝"
+msgstr "模組 %(mod)r 未安裝"
 
 #: ../jhbuild/config.py:180
 #, python-format
@@ -912,7 +912,7 @@ msgstr "无效的检出模式"
 #: ../jhbuild/config.py:375
 #, python-format
 msgid "invalid checkout mode (module: %s)"
-msgstr "无效的检出模式(模块：%s)"
+msgstr "无效的检出模式(模組：%s)"
 
 #: ../jhbuild/config.py:377
 msgid "copy mode requires copy_dir to be set"
@@ -921,7 +921,7 @@ msgstr "复制模式需要设置 copy_dir"
 #: ../jhbuild/config.py:382
 #, python-format
 msgid "modulesets directory (%s) not found, disabling use_local_modulesets"
-msgstr "模块集目录(%s) 找不到，禁用 use_local_modulesets"
+msgstr "模組集目录(%s) 找不到，禁用 use_local_modulesets"
 
 #: ../jhbuild/config.py:388 ../jhbuild/config.py:390 ../jhbuild/config.py:392
 #: ../jhbuild/config.py:394 ../jhbuild/config.py:397
@@ -937,7 +937,7 @@ msgstr "安裝前缀(%s)无法创建"
 #: ../jhbuild/config.py:417
 #, python-format
 msgid "working directory (%s) can not be created"
-msgstr "无法创建工作目录(%s)"
+msgstr "無法創建工作目錄(%s)"
 
 #: ../jhbuild/config.py:533
 #, python-format
@@ -971,7 +971,7 @@ msgstr "解析“min_age”相对时间失败"
 #: ../jhbuild/config.py:732
 msgid ""
 "quiet mode has been disabled because the Python curses module is missing."
-msgstr "安静模式已禁用，因为 Python curses 模块缺失。"
+msgstr "安静模式已禁用，因为 Python curses 模組缺失。"
 
 #: ../jhbuild.desktop.in.in.h:1
 msgid "GNOME Build Tool"
@@ -979,7 +979,7 @@ msgstr "GNOME 构建工具"
 
 #: ../jhbuild.desktop.in.in.h:2
 msgid "Build GNOME modules"
-msgstr "构建 GNOME 模块"
+msgstr "构建 GNOME 模組"
 
 #: ../jhbuild/frontends/autobuild.py:72
 #, python-format
@@ -1012,7 +1012,7 @@ msgstr "开始构建 #%s"
 #: ../jhbuild/frontends/autobuild.py:232
 #, python-format
 msgid "**** Starting module %s ****"
-msgstr "**** 正在启动模块 %s ****"
+msgstr "**** 正在启动模組 %s ****"
 
 #: ../jhbuild/frontends/buildscript.py:42
 #, python-format
@@ -1047,12 +1047,12 @@ msgstr "跳过 %s(为最近安裝)"
 #: ../jhbuild/frontends/buildscript.py:119
 #, python-format
 msgid "module %(mod)s will be built even though %(dep)s failed"
-msgstr "尽管 %(dep)s 模块构建失败，仍将构建 %(mod)s 模块"
+msgstr "尽管 %(dep)s 模組构建失败，仍将构建 %(mod)s 模組"
 
 #: ../jhbuild/frontends/buildscript.py:122
 #, python-format
 msgid "module %(mod)s not built due to non buildable %(dep)s"
-msgstr "由于 %(dep)s 无法构建，未构建 %(mod)s 模块"
+msgstr "由于 %(dep)s 无法构建，未构建 %(mod)s 模組"
 
 #: ../jhbuild/frontends/buildscript.py:248
 #, python-format
@@ -1070,7 +1070,7 @@ msgstr "其他..."
 
 #: ../jhbuild/frontends/gtkui.py:140
 msgid "Choose Module:"
-msgstr "选择模块："
+msgstr "选择模組："
 
 #: ../jhbuild/frontends/gtkui.py:160
 msgid "Build Progress"
@@ -1110,11 +1110,11 @@ msgstr "忽略错误并继续 %s"
 
 #: ../jhbuild/frontends/gtkui.py:403 ../jhbuild/frontends/terminal.py:317
 msgid "Ignore error and continue to next module"
-msgstr "忽略错误并继续下个模块"
+msgstr "忽略错误并继续下个模組"
 
 #: ../jhbuild/frontends/gtkui.py:405 ../jhbuild/frontends/terminal.py:318
 msgid "Give up on module"
-msgstr "放弃模块"
+msgstr "放弃模組"
 
 #: ../jhbuild/frontends/gtkui.py:412 ../jhbuild/frontends/terminal.py:327
 #, python-format
@@ -1132,11 +1132,11 @@ msgstr "%(command)s 以 %(rc)s 信号死亡"
 
 #: ../jhbuild/frontends/gtkui.py:646
 msgid "Module"
-msgstr "模块"
+msgstr "模組"
 
 #: ../jhbuild/frontends/gtkui.py:665
 msgid "Start At"
-msgstr "开始于"
+msgstr "開始於"
 
 #: ../jhbuild/frontends/gtkui.py:708
 msgid "Preferences"
@@ -1152,7 +1152,7 @@ msgstr "总是运行 autogen.sh"
 
 #: ../jhbuild/frontends/gtkui.py:722
 msgid "Don't poison modules on failure"
-msgstr "失败时不要污染模块"
+msgstr "失败时不要污染模組"
 
 #: ../jhbuild/frontends/terminal.py:180 ../jhbuild/frontends/tinderbox.py:251
 #: ../jhbuild/frontends/tinderbox.py:384 ../jhbuild/frontends/tinderbox.py:439
@@ -1180,7 +1180,7 @@ msgstr "成功"
 
 #: ../jhbuild/frontends/terminal.py:279
 msgid "the following modules were not built"
-msgstr "以下模块未构建"
+msgstr "下列模組未構建"
 
 #: ../jhbuild/frontends/terminal.py:301 ../jhbuild/frontends/tinderbox.py:415
 msgid "automatically retrying configure"
@@ -1220,7 +1220,7 @@ msgstr "yes"
 
 #: ../jhbuild/main.py:98
 msgid "You should not run jhbuild as root.\n"
-msgstr "您不应该以 root 身份运行 jhbuild。\n"
+msgstr "您不應該以 root 身份執行 jhbuild。\n"
 
 #: ../jhbuild/main.py:106
 msgid "%prog [ -f config ] command [ options ... ]"
@@ -1230,7 +1230,7 @@ msgstr "%prog [ -f config ] 命令 [ 选项 ... ]"
 msgid ""
 "Build a set of modules from diverse repositories in correct dependency order "
 "(such as GNOME)."
-msgstr "以正确的顺序构建源自不同仓库的一组模块(如 GNOME)"
+msgstr "以正确的顺序构建源自不同仓库的一组模組(如 GNOME)"
 
 #: ../jhbuild/main.py:113
 msgid "Display this help and exit"
@@ -1242,7 +1242,7 @@ msgstr "使用非默认的配置文件"
 
 #: ../jhbuild/main.py:123
 msgid "use a non default module set"
-msgstr "使用非默认的模块集"
+msgstr "使用非默认的模組集"
 
 #: ../jhbuild/main.py:126
 msgid "do not prompt for input"
@@ -1307,12 +1307,12 @@ msgstr "<%s/> 标签必须包含 value=''"
 #: ../jhbuild/modtypes/__init__.py:60
 #, python-format
 msgid "unknown module type %s"
-msgstr "未知的模块类型 %s"
+msgstr "未知的模組類型 %s"
 
 #: ../jhbuild/modtypes/__init__.py:77
 #, python-format
 msgid "dep node for module %s is missing package attribute"
-msgstr "模块 %s 对应的依赖节点缺少包属性"
+msgstr "模組 %s 对应的依赖节点缺少包属性"
 
 #: ../jhbuild/modtypes/__init__.py:86 ../jhbuild/modtypes/__init__.py:93
 #, python-format
@@ -1331,7 +1331,7 @@ msgid ""
 "Repository=%(missing)s not found for module id=%(module)s. Possible "
 "repositories are %(possible)s"
 msgstr ""
-"未找到 id=%(module)s 的模块对应的 repository=%(missing)s。可能的仓库为 "
+"未找到 id=%(module)s 的模組对应的 repository=%(missing)s。可能的仓库为 "
 "%(possible)s"
 
 #: ../jhbuild/modtypes/__init__.py:155
@@ -1339,7 +1339,7 @@ msgstr ""
 msgid ""
 "No repository for module id=%(module)s. Either set branch/repo or default "
 "repository."
-msgstr "没有对应模块 id=%(module)s 的仓库。请设置 branch/repo 或默认仓库。"
+msgstr "没有对应模組 id=%(module)s 的仓库。请设置 branch/repo 或默认仓库。"
 
 #: ../jhbuild/modtypes/__init__.py:227
 #, python-format
@@ -1356,12 +1356,12 @@ msgstr "正在将临时 DESTDIR %r 移动到构建前缀目录"
 msgid ""
 "Files remaining in buildroot %(dest)r; module may have installed files "
 "outside of prefix."
-msgstr "文件仍在构建根目录 %(dest)r 中；模块可能安裝了前缀目录外的文件。"
+msgstr "文件仍在构建根目录 %(dest)r 中；模組可能安裝了前缀目录外的文件。"
 
 #: ../jhbuild/modtypes/__init__.py:352
 #, python-format
 msgid "Module failed to install into DESTDIR %(dest)r"
-msgstr "模块无法安裝至 DESTDIR %(dest)r"
+msgstr "模組无法安裝至 DESTDIR %(dest)r"
 
 #: ../jhbuild/modtypes/__init__.py:362
 #, python-format
@@ -1432,7 +1432,7 @@ msgstr "正在安裝内核"
 
 #: ../jhbuild/modtypes/linux.py:185
 msgid "Installing modules"
-msgstr "正在安裝模块"
+msgstr "正在安裝模組"
 
 #: ../jhbuild/modtypes/linux.py:200
 msgid "Installing kernel headers"
@@ -1455,13 +1455,13 @@ msgid ""
 "Default repository=%(missing)s not found for kconfig in linux id="
 "%(linux_id)s. Possible repositories are %(possible)s"
 msgstr ""
-"找不到模块 id=%(linux_id)s 中 kconfig 对应的默认仓库 repository=%(missing)s。"
+"找不到模組 id=%(linux_id)s 中 kconfig 对应的默认仓库 repository=%(missing)s。"
 "可能的仓库为%(possible)s"
 
 #: ../jhbuild/modtypes/tarball.py:68
 #, python-format
 msgid "module '%(module)s' has invalid size attribute ('%(size)s')"
-msgstr "'%(module)s' 模块的大小属性('%(size)s')无效"
+msgstr "'%(module)s' 模組的大小属性('%(size)s')无效"
 
 #: ../jhbuild/moduleset.py:34 ../jhbuild/utils/httpcache.py:46
 msgid "Python XML packages are required but could not be found"
@@ -1470,12 +1470,12 @@ msgstr "需要 Python XML 包，但找不到"
 #: ../jhbuild/moduleset.py:79
 #, python-format
 msgid "fixed case of module '%(orig)s' to '%(new)s'"
-msgstr "已将'%(orig)s' 模块的实例修复为 '%(new)s'"
+msgstr "已将'%(orig)s' 模組的实例修复为 '%(new)s'"
 
 #: ../jhbuild/moduleset.py:118
 #, python-format
 msgid "%(module)s has a dependency on unknown \"%(invalid)s\" module"
-msgstr "%(module)s 依赖于未知模块 \"%(invalid)s\""
+msgstr "%(module)s 依赖于未知模組 \"%(invalid)s\""
 
 #: ../jhbuild/moduleset.py:131
 #, python-format
@@ -1484,7 +1484,7 @@ msgstr "检测到循环依赖：%s"
 
 #: ../jhbuild/moduleset.py:282
 msgid "Unknown module:"
-msgstr "未知模块："
+msgstr "未知模組："
 
 #: ../jhbuild/moduleset.py:408
 msgid "<if> must have exactly one of condition-set='' or condition-unset=''"
@@ -1510,7 +1510,7 @@ msgid ""
 "Modulesets were edited locally but JHBuild is configured to get them from "
 "the network, perhaps you need to add use_local_modulesets = True to your %s."
 msgstr ""
-"在本地修改了模块集，但 JHBuild 配置为从网络获取它们。或许您应该向您的 %s 中添"
+"在本地修改了模組集，但 JHBuild 配置为从网络获取它们。或许您应该向您的 %s 中添"
 "加 use_local_modulesets = True"
 
 #: ../jhbuild/utils/cmds.py:40
@@ -1689,7 +1689,7 @@ msgstr "尚未支持基于日期的检出\n"
 
 #: ../jhbuild/versioncontrol/git.py:111
 msgid "ignored bad branch redefinition for module:"
-msgstr "已忽略有问题的模块分支重定义："
+msgstr "已忽略有问题的模組分支重定义："
 
 #: ../jhbuild/versioncontrol/git.py:201
 msgid "Need at least git-1.5.6 from June/08 to operate"
@@ -1724,13 +1724,13 @@ msgstr "%s 命令并未包含提交(commit)行：%r"
 msgid ""
 "Failed to update module as it switched to git (you should check for changes "
 "then remove the directory)."
-msgstr "在切换到 git 时更新模块失败(您应该检查改动然后移除该目录)。"
+msgstr "在切换到 git 时更新模組失败(您应该检查改动然后移除该目录)。"
 
 #: ../jhbuild/versioncontrol/git.py:430
 msgid ""
 "Failed to update module (missing .git) (you should check for changes then "
 "remove the directory)."
-msgstr "更新模块失败(缺少 .git)(您应该检查改动然后移除该目录)。"
+msgstr "更新模組失败(缺少 .git)(您应该检查改动然后移除该目录)。"
 
 #: ../jhbuild/versioncontrol/git.py:534
 msgid ""
@@ -1743,12 +1743,12 @@ msgstr ""
 #: ../jhbuild/versioncontrol/git.py:579
 #, python-format
 msgid "Cannot get last revision from %s. Check the module location."
-msgstr "无法从 %s 获取最新版本。请检查模块位置。"
+msgstr "无法从 %s 获取最新版本。请检查模組位置。"
 
 #: ../jhbuild/versioncontrol/__init__.py:196
 #, python-format
 msgid "unknown repository type %s"
-msgstr "未知的仓库类型 %s"
+msgstr "未知的倉庫類型 %s"
 
 #: ../jhbuild/versioncontrol/mtn.py:93
 #, python-format
@@ -1796,12 +1796,12 @@ msgstr "检查冲突失败"
 #: ../jhbuild/versioncontrol/tarball.py:90
 #, python-format
 msgid "branch for %s is not correct, check the moduleset file."
-msgstr "%s 分支不正确，请检查模块集文件。"
+msgstr "%s 分支不正确，请检查模組集文件。"
 
 #: ../jhbuild/versioncontrol/tarball.py:126
 #, python-format
 msgid "URL has no filename component: %s"
-msgstr "URL 中不含文件名：%s"
+msgstr "URL 並不包含檔案名稱：%s"
 
 #: ../jhbuild/versioncontrol/tarball.py:169
 msgid "file not downloaded"
@@ -1815,7 +1815,7 @@ msgstr "下载文件大小不正确(应为 %(size1)d)，而得到的是 %(size2)
 #: ../jhbuild/versioncontrol/tarball.py:180
 #, python-format
 msgid "invalid hash attribute on module %s"
-msgstr "%s 模块的 hash 属性无效"
+msgstr "%s 模組的 hash 属性无效"
 
 #: ../jhbuild/versioncontrol/tarball.py:193
 #, python-format
@@ -1881,7 +1881,7 @@ msgstr "无法检出 quilt 补丁集"
 #~ msgstr "找不到 XML 目录"
 
 #~ msgid "Could not find the Perl module %s"
-#~ msgstr "找不到 Perl 模块 %s"
+#~ msgstr "找不到 Perl 模組 %s"
 
 #~ msgid "gnome-autogen.sh not available"
 #~ msgstr "gnome-autogen.sh 不可用"
@@ -1902,25 +1902,25 @@ msgstr "无法检出 quilt 补丁集"
 #~ "bootstrap moduleset has been updated since the last time you used it, "
 #~ "perhaps you should run jhbuild bootstrap."
 #~ msgstr ""
-#~ "bootstrap 模块集从您上次使用以来有了更新，也许您应该运行 jhbuild bootstrap"
+#~ "bootstrap 模組集从您上次使用以来有了更新，也许您应该运行 jhbuild bootstrap"
 
 #~ msgid ""
 #~ "some bootstrap modules have been updated, perhaps you should update them: "
 #~ "%s."
-#~ msgstr "一些 bootstrap 模块有更新，也许您应该更新他们：%s。"
+#~ msgstr "一些 bootstrap 模組有更新，也许您应该更新他们：%s。"
 
 #~ msgid "This option does nothing anymore"
 #~ msgstr "此选项不再有作用"
 
 #~ msgid "do not use system installed modules"
-#~ msgstr "不要使用系统中安裝的模块"
+#~ msgstr "不要使用系统中安裝的模組"
 
 #~ msgid ""
 #~ "some modules (%s) were automatically ignored as a sufficient enough "
 #~ "version was found installed on your system. Use --ignore-system if you "
 #~ "want to build them nevertheless."
 #~ msgstr ""
-#~ "由于发现您的系统中已经安裝了足够新的版本，一些模块(%s)被自动忽略。虽然如"
+#~ "由于发现您的系统中已经安裝了足够新的版本，一些模組(%s)被自动忽略。虽然如"
 #~ "此，如果您愿意，可以使用 --ignore-system 选项来构建它们。"
 
 #~ msgid ""
